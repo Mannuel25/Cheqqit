@@ -1,7 +1,18 @@
 <!DOCTYPE html>
-<html lang="en-US">
+{% load static %}
+<html lang="en">
 <head>
-  <title>{% block title %}Cheqqit{% endblock title %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Cheqqit: Task management, to-do list, and checklist{% endblock content %}</title>
+  <link rel=" icon" href="{% static 'images/favicon.ico' type='image/x-icon' %}">
 </head>
+
+<body>
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+</body>
+</html>
