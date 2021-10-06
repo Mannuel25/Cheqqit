@@ -7,8 +7,10 @@
   Hello, {{ user.username }}
   <p><a href="{% url 'logout' %}">Sign Out</a></p>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Sign In</a> |
+  <p>You are not signed in</p>
+  <br>
+  <p>Click here to <a href="{% url 'login' %}">Sign In</a>
+  <br>
   <a href="{% url 'signup' %}">Sign Up</a> 
 {% endif %}
 {% endblock content %}
