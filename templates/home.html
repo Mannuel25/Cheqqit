@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Cheqqit: App for task management, to-do lists, and checklists{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}
+  <p>Click here to<a href="{% url 'logout' %}">LogOut</a></p>
+{% else %}
+  <p>You are'nt Logged In</p>
+  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+{% endblock content %}
