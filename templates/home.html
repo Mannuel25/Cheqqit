@@ -8,9 +8,7 @@
   <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime amet earum itaque ipsam nisi aperiam consectetur temporibus ipsa! Doloremque fugit ab eligendi. Itaque placeat ex optio at reprehenderit dolores aliquid!</p>
   <p>Click here to <a href="{% url 'logout' %}">Sign Out</a></p>
 {% else %}
-  <p>You are'nt Logged In</p>
-  <a href="{% url 'login' %}">Sign In</a>
-  <hr>
+  <a href="{% url 'login' %}">Sign In</a> |
   <a href="{% url 'signup' %}">Sign Up</a>
 {% endif %}
 {% endblock content %}
