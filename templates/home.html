@@ -4,7 +4,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  <h3>Hey {{ user.username }}}!</h3>
+  <h3>Hey {{ user.username }}!</h3>
   <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime amet earum itaque ipsam nisi aperiam consectetur temporibus ipsa! Doloremque fugit ab eligendi. Itaque placeat ex optio at reprehenderit dolores aliquid!</p>
   <p>Click here to <a href="{% url 'logout' %}">Sign Out</a></p>
 {% else %}
