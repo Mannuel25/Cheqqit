@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 html, body {
   height: 100%;
@@ -10,10 +10,12 @@ html, body {
   padding: .8rem;
 }
 .navbar-nav li {
-  padding-right: 20px;
+  padding-right: 30px;
+  color: blue;
 }
 .nav-link {
-  font-size: 1.1em !important;
+  color: black !important;
+  font-size: 16px !important;
 }
 .navbar-toggler,
 .navbar-toggler:focus,
