@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Sign In - Cheqqit{% endblock title %}
 
 {% block content %}
-<h2>Sign In</h2>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign In</button>
-</form>
+<h2>Sign in to Cheqqit</h2>
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body">
+					<form action="" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input type="text" class="form-control" name="username">
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="password">Password</label>
+							<input type="password" class="form-control" name="password">
+						</div>
+						<br>
+						<button type="submit" class="btn btn-success">Sign In</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock content %}
