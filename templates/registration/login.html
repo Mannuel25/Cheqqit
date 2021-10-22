@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Sign In - Cheqqit{% endblock title %}
 
 {% block content %}
-<br>
+<br><br><br>
 <img src="/static/img/img.png" class="center-img" height="43px">
+<br>
 <p style="font-size: 27px; text-align: center;">Sign in to Cheqqit</p>
 <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
 	<div>
 		<div class="mx-auto" style="width: 310px;">
 			<div class="card">
 				<div class="card-body">
-					<form action="" method="post">
+					<form action="" method="post" class="post-form">
 						{% csrf_token %}
 						<div class="form-group">
 							<label for="username">Username</label>
@@ -26,8 +26,20 @@
 						<br>
 						<button type="submit" class="btn btn-success mx-auto d-block form-control">Sign In</button>
 						<br>
-						<p>New to Cheqqit? <a href="{% url 'signup' %}" style="text-decoration: none;">Create an account</a></p>
+						{% for message in messages %}
+						<div class="alert alert-danger" id='alert_msg'>
+							{{ message }}
+						</div>
+						{% endfor %}
 					</form>
+					<script>
+						setTimeout(function () {
+							if ($('#alert_msg').length > 0) {
+								$('#alert_msg').remove();
+							}
+						}, 1900)   
+					</script>
+					<p>New to Cheqqit? <a href="{% url 'signup' %}" style="text-decoration: none;">Create an account</a></p>
 				</div>
 			</div>
 		</div>
