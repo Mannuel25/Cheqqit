@@ -3,12 +3,21 @@
 {% block title %}Cheqqit: App for task management, to-do lists, and checklists{% endblock title %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  <h3>Hey {{ user.username }}!</h3>
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime amet earum itaque ipsam nisi aperiam consectetur temporibus ipsa! Doloremque fugit ab eligendi. Itaque placeat ex optio at reprehenderit dolores aliquid!</p>
-  <p>Click here to <a href="{% url 'logout' %}">Sign Out</a></p>
-{% else %}
-  <a href="{% url 'login' %}">Sign In</a> |
-  <a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
+<section class="text-dark p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+  <div class="container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+      <div>
+        <h1>Each Day, Achieve More</h1>
+        <br>
+        <p style="font-size: 21px;">A lovely and simple way to keep track of your tasks and goals.</p>
+        <br>
+          <p>
+            <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get Started</a>
+          </p>
+      </div>
+      <img class="img-fluid w-50 d-none d-sm-block" src="/static/img/homepage_image.JPG"/>
+    </div>
+  </div>
+</section>
+
 {% endblock content %}
