@@ -23,9 +23,10 @@ html, body {
   border: none;
   box-shadow: none;
 }
-nav { 
+/* nav { 
   background-color: rgba(128, 128, 128, 0.11); 
-}
+  background-color: rebeccapurple;
+} */
 .center-img {
   display: block;
   margin-left: auto;
