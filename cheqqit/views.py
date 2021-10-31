@@ -21,7 +21,7 @@ def signupPage(request):
 
 def signinPage(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('webapp')
     else:
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -29,7 +29,7 @@ def signinPage(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('webapp')
             else:
                 messages.error(request, "Invalid username or password")
         context = {}
