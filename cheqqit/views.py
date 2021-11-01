@@ -8,7 +8,7 @@ from .forms import CustomUserCreationForm
 
 def signupPage(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('webapp')
     else:
         form = CustomUserCreationForm()
         if request.method == 'POST':
