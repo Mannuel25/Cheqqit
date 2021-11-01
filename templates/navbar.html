@@ -3,17 +3,6 @@
     <a href="{% url 'home' %}" class="navbar-brand"><img src="/static/img/logo-.png" height="56px" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      {% if user.is_authenticated %}
-      <ul class="navbar-nav ms-auto">
-        <li class="navbar-item">
-          <a href="{% url 'home' %}" class="nav-link">Home</a>
-        </li>
-        <div class="dropdown-divider"></div>
-        <li class="navbar-item">
-          <a href="{% url 'logout' %}" class="nav-link">Sign Out</a>
-        </li>
-      </ul>
-      {% else %}
       <ul class="navbar-nav ms-auto">
         <li class="navbar-item">
           <a href="{% url 'features' %}" class="nav-link">Features</a>
@@ -27,7 +16,6 @@
           <a href="{% url 'signup' %}" class="nav-link">Sign Up</a>
         </li>
       </ul>
-      {% endif %}
     </div>
   </div>
 </nav>
