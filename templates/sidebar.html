@@ -50,7 +50,11 @@
                     <div class="name">Emmanuel Tanimowo</div>
                 </div>
             </div>
-            <i class='bx bx-log-out' id="log_out"></i>
+            <a href="{% url 'logout' %}">
+                <i class='bx bx-log-out' id="log_out"></i>
+                <span class="links_name">Account and settings</span>
+                <span class="tooltip">Account and settings</span>
+            </a>
         </li>
     </ul>
 </div>
