@@ -7,33 +7,27 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
 def signupPage(request):
-    if request.user.is_authenticated:
-        return redirect('webapp')
-    else:
-        form = CustomUserCreationForm()
-        if request.method == 'POST':
-            form = CustomUserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('login')
-        context = {'form': form}
-        return render(request, 'signup.html', context)
+    form = CustomUserCreationForm()
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    context = {'form': form}
+    return render(request, 'signup.html', context)
 
 def signinPage(request):
-    if request.user.is_authenticated:
-        return redirect('webapp')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('webapp')
-            else:
-                messages.error(request, "Invalid username or password")
-        context = {}
-        return render(request, 'registration/login.html', context)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('webapp')
+        else:
+            messages.error(request, "Invalid username or password")
+    context = {}
+    return render(request, 'registration/login.html', context)
 
 def signoutUser(request):
     logout(request)
