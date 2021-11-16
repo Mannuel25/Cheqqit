@@ -4,8 +4,8 @@
     </div>
     <ul class="nav-list">
         <li>
-            <i class='bx bx-search' id="search_btn"></i>
-            <input type="text" placeholder="Search..." id="search_input">
+            <i class='bx bx-search'></i>
+            <input type="text" placeholder="Search...">
             <span class="tooltip">Search</span>
         </li>
         <li>
@@ -60,27 +60,16 @@
 <script>
     let sidebar = document.querySelector(".sidebar");
     let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector("#search_btn");
-    let searchInput = document.querySelector("#search_input");
 
     closeBtn.addEventListener("click", () => {
         sidebar.classList.toggle("open");
         menuBtnChange();
     });
-    // function hoverColor() {
-    //         document.getElementById("search_btn").style.color = "white";
-    // }
     function menuBtnChange() {
         if (sidebar.classList.contains("open")) {
             closeBtn.classList.replace("bx-menu", "bx-x")
-            sidebar.addEventListener('click', () => searchBtn.style.background = 'rgb(163, 88, 233)')
-            sidebar.addEventListener('click', () => searchInput.style.background = 'rgb(163, 88, 233)')
         } else {
             closeBtn.classList.replace("bx-x", "bx-menu")
-            sidebar.addEventListener('click', () => searchBtn.style.background = 'blueviolet')
-            sidebar.addEventListener('click', () => searchInput.style.background = 'blueviolet')
-            // sidebar.addEventListener('click', () => searchBtn.style.hover = 'white')
-            // document.getElementById("search_btn").style.color = "white";
         }
     }
 </script>
