@@ -99,8 +99,8 @@ border: none;
 border-radius: 12px;
 transition: all 0.5s ease;
 /* background: rgb(185, 128, 240); */
-background: blueviolet;
-/* background: rgb(163, 88, 233); */
+/* background: blueviolet; */
+background: rgb(163, 88, 233);
 }
 .sidebar.open input{
 padding: 0 20px 0 50px;
@@ -112,9 +112,9 @@ top: 50%;
 left: 0;
 transform: translateY(-50%);
 font-size: 22px;
-/* background: rgb(163, 88, 233); */
+background: rgb(163, 88, 233);
 /* background: rgb(185, 128, 240); */
-background: blueviolet;
+/* background: blueviolet; */
 color: #FFF;
 }
 .sidebar.open .bx-search:hover{
