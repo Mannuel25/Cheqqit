@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=20,unique=True)
     email = models.EmailField(max_length=70,unique=True)
-    password = models.CharField(max_length=12)
+    password = models.CharField(max_length=12)  
 
 class Tasks(models.Model):
     user = models.ForeignKey(
@@ -20,3 +20,4 @@ class Tasks(models.Model):
 
     class Meta:
         order_with_respect_to = 'user'
+
