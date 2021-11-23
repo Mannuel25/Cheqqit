@@ -240,3 +240,26 @@ font-family: Arial, Helvetica, sans-serif;
     display: none;
   }
 }
+.navbar-toggler, 
+.navbar-toggler:focus, 
+.navbar-toggler:active, 
+.navbar-toggler-icon:focus {
+  outline: none; 
+  border: none; 
+  box-shadow: none;
+}
+.navbar {
+  padding: .8rem;
+}
+.navbar-nav li {
+  padding-right: 30px;
+}
+.nav-link {
+  color: black !important;
+  font-size: 18px !important;
+}
+.center-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
