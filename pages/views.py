@@ -19,20 +19,32 @@ class InboxView(LoginRequiredMixin, ListView):
     model = UserTasks
     context_object_name = 'tasks'
     template_name = 'inbox.html'
+    login_url = 'login'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # print('Context_1:', context)
-        # context['tasks'] = context['tasks'].filter(user=self.request.user)
-        # context['count'] = context['tasks'].filter(complete=False).count()
-        # print('Context_2:', context)
+        print('Context_1:', context)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(completed_task=False).count()
+        print('Context_2:', context)
 
         search_input = self.request.GET.get('search-area') or ''
         print('SEARCH INPUT:', search_input)
         if search_input:
             context['tasks'] = context['tasks'].filter(
-                title__contains=search_input)
+                title__icontains=search_input)
 
         context['search_input'] = search_input
 
         return context  
+
+
+class CreateTaskView(LoginRequiredMixin, CreateView):
+    model = UserTasks
+    fields = ['title', 'description',]
+    template_name = 'create_task.html'
+    success_url = reverse_lazy('inbox')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CreateTaskView, self).form_valid(form)
