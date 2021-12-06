@@ -9,5 +9,4 @@ class TaskDetails(forms.ModelForm):
 
     class Meta(forms.ModelForm):
         model = UserTasks
-        fields = ('title', 'description',)
-    
+        fields = ('title', 'description','completed_task',)
