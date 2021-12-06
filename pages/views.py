@@ -24,8 +24,9 @@ class InboxView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['count'] = context['tasks'].filter(complete=False).count()
-       
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(completed_task=False).count()
+
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -40,3 +41,8 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
     template_name = 'create_task.html'
     success_url = reverse_lazy('inbox')
     login_url = 'login'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
