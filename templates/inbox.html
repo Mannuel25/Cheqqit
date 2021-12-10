@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,47 +16,13 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
     <link rel="manifest" href="/static/favicons/site.webmanifest">
     <style>
-        body {font-family: Arial, Helvetica, sans-serif;}
-
-.modal {
-  display: none; 
-  position: fixed;
-  z-index: 1; 
-  padding-top: 100px; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4); 
-}
-
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <div class="sidebar_btn">
@@ -121,9 +88,9 @@
         </ul>
     </div>
     <section class="home-section" style="background-color: white;">
-        <h4>Hello {{request.user|title}}</h4>
         <div class="text">Inbox</div>
-        <h3>You have <i>{{count}}</i> incomplete tasks</h3>
+        <h5>You have <i>{{count}}</i> incomplete tasks</h5>
+        
     </section>
     <script>
         let sidebar = document.querySelector(".sidebar");
@@ -135,9 +102,9 @@
             menuBtnChange();
         });
 
-        searchBtn.addEventListener("click", () => { 
+        searchBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
-            menuBtnChange(); 
+            menuBtnChange();
         });
 
         function menuBtnChange() {
@@ -153,4 +120,5 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>
