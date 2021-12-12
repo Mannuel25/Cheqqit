@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +20,25 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
-        
+        .rounded-6 {
+      border-radius: 1rem;
+    }
+    .modal-sheet .modal-dialog {
+      width: 380px;
+      transition: bottom .75s ease-in-out;
+    }
+    .modal-alert .modal-dialog {
+      width: 380px;
+    }
+    .btn-danger {
+      float: right;
+      margin: 12px;
+    }
+
+    .btn-success {
+      float: left;
+      margin: 12px;
+    }   
     </style>
 </head>
 
@@ -37,9 +56,9 @@
             <li>
                 <a href="{% url 'create_task' %}">
                     <i class='bx bx-plus' style="font-size: 29px;"></i>
-                    <span class="links_name">Add task / goal</span>
+                    <span class="links_name">Add task/goal</span>
                 </a>
-                <span class="tooltip">Add task / goal</span>
+                <span class="tooltip">Add task/goal</span>
             </li>
             <li>
                 <a href="{% url 'inbox' %}">
@@ -88,8 +107,19 @@
         </ul>
     </div>
     <section class="home-section" style="background-color: white;">
-        <div class="text">Inbox</div>
+        <div class="text" style="padding-right: 34px;">Inbox</div>
         <h5>You have <i>{{count}}</i> incomplete tasks</h5>
+        <div style="margin-left: 34px;">
+            <form>
+                {% for task in tasks  %}
+                {% if task.completed_task == False %}
+                    <input type="checkbox">
+                    <label>{{task}}</label><br>
+                    <hr>
+                {% endif %}
+                {% endfor %}
+            </form>
+        </div>
         
     </section>
     <script>
