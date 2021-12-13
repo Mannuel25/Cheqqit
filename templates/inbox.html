@@ -107,14 +107,13 @@
         </ul>
     </div>
     <section class="home-section" style="background-color: white;">
-        <div class="text" style="padding-right: 34px;">Inbox</div>
-        <h5>You have <i>{{count}}</i> incomplete tasks</h5>
+        <div class="text" style="margin-left: 34px;">Inbox</div>
         <div style="margin-left: 34px;">
             <form>
                 {% for task in tasks  %}
                 {% if task.completed_task == False %}
                     <input type="checkbox">
-                    <label>{{task}}</label><br>
+                    <label>{{task|capfirst}}</label><br>
                     <hr>
                 {% endif %}
                 {% endfor %}
