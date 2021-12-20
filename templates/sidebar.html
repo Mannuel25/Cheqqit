@@ -4,12 +4,19 @@
     </div>
     <ul class="nav-list">
         <li>
-            <i class='bx bx-search' id="search_btn"></i>
-            <input type="text" placeholder="Search..." id="search_input">
+            <i class='bx bx-search'></i>
+            <input type="text" placeholder="Search...">
             <span class="tooltip">Search</span>
         </li>
         <li>
-            <a href="#">
+            <a href="{% url 'create_task' %}">
+                <i class='bx bx-plus' style="font-size: 29px;"></i>
+                <span class="links_name">Add task/goal</span>
+            </a>
+            <span class="tooltip">Add task/goal</span>
+        </li>
+        <li>
+            <a href="{% url 'inbox' %}">
                 <i class='bx bxs-inbox'></i>
                 <span class="links_name">Inbox</span>
             </a>
@@ -50,41 +57,33 @@
                     <div class="name">Emmanuel Tanimowo</div>
                 </div>
             </div>
-            <a href="{% url 'logout' %}">
-                <i class='bx bx-log-out' id="log_out"></i>
-                <span class="links_name">Account and settings</span>
-                <span class="tooltip">Account and settings</span>
-            </a>
+            <a href="{% url 'logout' %}"><i class='bx bx-log-out' id="log_out"></i></a>
         </li>
     </ul>
 </div>
-<section class="home-section">
-    <div class="text">Cheqqit</div>
+<!-- <section class="home-section" style="background-color: white;">
+    <div class="text">Inbox</div> -->
 </section>
 <script>
     let sidebar = document.querySelector(".sidebar");
     let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector("#search_btn");
-    let searchInput = document.querySelector("#search_input");
+    let searchBtn = document.querySelector(".bx-search");
 
     closeBtn.addEventListener("click", () => {
         sidebar.classList.toggle("open");
         menuBtnChange();
     });
-    // function hoverColor() {
-    //         document.getElementById("search_btn").style.color = "white";
-    // }
+
+    searchBtn.addEventListener("click", () => { 
+        sidebar.classList.toggle("open");
+        menuBtnChange(); 
+    });
+
     function menuBtnChange() {
-        if (sidebar.classList.contains("open")) {
-            closeBtn.classList.replace("bx-menu", "bx-x")
-            sidebar.addEventListener('click', () => searchBtn.style.background = 'rgb(163, 88, 233)')
-            sidebar.addEventListener('click', () => searchInput.style.background = 'rgb(163, 88, 233)')
-        } else {
-            closeBtn.classList.replace("bx-x", "bx-menu")
-            sidebar.addEventListener('click', () => searchBtn.style.background = 'blueviolet')
-            sidebar.addEventListener('click', () => searchInput.style.background = 'blueviolet')
-            // sidebar.addEventListener('click', () => searchBtn.style.hover = 'white')
-            // document.getElementById("search_btn").style.color = "white";
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-x")
+            } else {
+                closeBtn.classList.replace("bx-x", "bx-menu")
+            }
         }
-    }
 </script>

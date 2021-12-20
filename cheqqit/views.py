@@ -3,12 +3,11 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
 def signupPage(request):
     if request.user.is_authenticated:
-        return redirect('webapp')
+        return redirect('home')
     else:
         form = CustomUserCreationForm()
         if request.method == 'POST':
@@ -21,7 +20,7 @@ def signupPage(request):
 
 def signinPage(request):
     if request.user.is_authenticated:
-        return redirect('webapp')
+        return redirect('home')
     else:
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -29,7 +28,7 @@ def signinPage(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('webapp')
+                return redirect('inbox')
             else:
                 messages.error(request, "Invalid username or password")
         context = {}

@@ -228,7 +228,7 @@ z-index: 2;
 left: 250px;
 width: calc(100% - 250px);
 }
-.home-section .text{
+.home-section .inbox-heading{
 display: inline-block;
 color: #11101d;
 font-size: 25px;
