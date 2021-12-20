@@ -6,12 +6,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserTasks
 from .forms import TaskDetails
-<<<<<<< HEAD
-from  django.shortcuts import render
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-=======
->>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
