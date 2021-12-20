@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load crispy_forms_tags %}
 {% load static %}
 <!DOCTYPE html>
@@ -132,3 +133,139 @@
 </body>
 
 </html>
+=======
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Inbox - Cheqqit {% endblock title %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'rg.css' %}">
+    <script src="https://kit.fontawesome.com/109fe23f15.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicons/site.webmanifest">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar_btn">
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search...">
+                <span class="tooltip">Search</span>
+            </li>
+            <li>
+                <a href="{% url 'create_task' %}">
+                    <i class='bx bx-plus' style="font-size: 29px;"></i>
+                    <span class="links_name">Add task/goal</span>
+                </a>
+                <span class="tooltip">Add task/goal</span>
+            </li>
+            <li>
+                <a href="{% url 'inbox' %}">
+                    <i class='bx bxs-inbox'></i>
+                    <span class="links_name">Inbox&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{count}}</span>
+                </a>
+                <span class="tooltip">Inbox</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-calendar'></i>
+                    <span class="links_name">Today</span>
+                </a>
+                <span class="tooltip">Today</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-purchase-tag-alt'></i>
+                    <span class="links_name">Labels</span>
+                </a>
+                <span class="tooltip">Labels</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="far fa-check-square"></i>
+                    <span class="links_name">Completed Tasks</span>
+                </a>
+                <span class="tooltip">Completed Tasks</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-trash'></i>
+                    <span class="links_name">Trash</span>
+                </a>
+                <span class="tooltip">Trash</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <!--<img src="profile.jpg" alt="profileImg">-->
+                    <div class="name_job">
+                        <div class="name">Emmanuel Tanimowo</div>
+                    </div>
+                </div>
+                <a href="{% url 'logout' %}"><i class='bx bx-log-out' id="log_out"></i></a>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section" style="background-color: white;">
+        <div class="text" style="margin-left: 34px;">Inbox</div>
+        <div style="margin-left: 34px;">
+            <form>
+                {% for task in tasks  %}
+                {% if task.completed_task == False %}
+                    <input type="checkbox">
+                    <label>{{task|capfirst}}</label><br>
+                    <hr>
+                {% endif %}
+                {% endfor %}
+            </form>
+        </div>
+        
+    </section>
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();
+        });
+
+        searchBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();
+        });
+
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-x")
+            } else {
+                closeBtn.classList.replace("bx-x", "bx-menu")
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+>>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593

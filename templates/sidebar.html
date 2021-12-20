@@ -11,9 +11,15 @@
         <li>
             <a href="{% url 'create_task' %}">
                 <i class='bx bx-plus' style="font-size: 29px;"></i>
+<<<<<<< HEAD
                 <span class="links_name">Add task/goal</span>
             </a>
             <span class="tooltip">Add task/goal</span>
+=======
+                <span class="links_name">Create Task</span>
+            </a>
+            <span class="tooltip">Create Task</span>
+>>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593
         </li>
         <li>
             <a href="{% url 'inbox' %}">
@@ -71,12 +77,18 @@
 
     closeBtn.addEventListener("click", () => {
         sidebar.classList.toggle("open");
-        menuBtnChange();
+        menuBtnChange();//calling the function(optional)
     });
 
+<<<<<<< HEAD
     searchBtn.addEventListener("click", () => { 
         sidebar.classList.toggle("open");
         menuBtnChange(); 
+=======
+    searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+>>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593
     });
 
     function menuBtnChange() {
@@ -86,4 +98,8 @@
                 closeBtn.classList.replace("bx-x", "bx-menu")
             }
         }
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593

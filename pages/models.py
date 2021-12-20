@@ -13,4 +13,8 @@ class UserTasks(models.Model):
         return self.title
 
     class Meta:
+<<<<<<< HEAD
         order_with_respect_to = 'user'
+=======
+        order_with_respect_to = 'user'
+>>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593
