@@ -89,7 +89,6 @@ font-family: Arial, Helvetica, sans-serif;
   display: none;
 }
 .sidebar input{
-<<<<<<< HEAD
 font-size: 15px;
 color: #FFF;
 font-weight: 400;
@@ -103,27 +102,13 @@ transition: all 0.5s ease;
 /* background: rgb(185, 128, 240); */
 /* background: blueviolet; */
 background: rgb(163, 88, 233);
-=======
-  font-size: 15px;
-  color: #FFF;
-  font-weight: 400;
-  outline: none;
-  height: 50px;
-  width: 100%;
-  width: 50px;
-  border: none;
-  border-radius: 12px;
-  transition: all 0.5s ease;
-  /* background: #1d1b31; */
-  background: rgb(163, 88, 233);
->>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593
 }
 .sidebar.open input{
   padding: 0 20px 0 50px;
   width: 100%;
 }
 .sidebar .bx-search{
-<<<<<<< HEAD
+
 position: absolute;
 top: 50%;
 left: 0;
@@ -133,16 +118,6 @@ background: rgb(163, 88, 233);
 /* background: rgb(185, 128, 240); */
 /* background: blueviolet; */
 color: #FFF;
-=======
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  font-size: 22px;
-  background: rgb(163, 88, 233);
-  /* background: #1d1b31; */
-  color: #FFF;
->>>>>>> 3a17f8703de8f1689401ca6490478e9e80bff593
 }
 .sidebar.open .bx-search:hover{
   /* background: #1d1b31; */
