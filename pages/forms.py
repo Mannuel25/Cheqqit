@@ -6,6 +6,14 @@ class TaskDetails(forms.ModelForm):
         (attrs={'placeholder':'Enter the task/goal title'}))
     description = forms.CharField(max_length=150, required=False, widget= forms.Textarea
         (attrs={'placeholder':'Enter the task/goal description'}))
+    task_due_date = forms.DateTimeField(
+        label="Task/goal due date",
+        widget=forms.widgets.DateTimeInput(attrs={'type':'date'})
+    )
+    task_due_time = forms.DateTimeField(
+        label="Task/goal due time",
+        widget=forms.widgets.DateTimeInput(attrs={'type':'time'})
+    )
 
     class Meta(forms.ModelForm):
         model = UserTasks
