@@ -7,10 +7,11 @@ class UserTasks(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     completed_task = models.BooleanField(default=False)
-    task_created_when = models.DateTimeField()
+    task_due_date = models.DateTimeField(null=True, blank=True)
+    task_due_time = models.DateTimeField(null=True, blank=True)
     
     def __str__(self):
         return self.title
-        
+    
     class Meta:
         order_with_respect_to = 'user'
