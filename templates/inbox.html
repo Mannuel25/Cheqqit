@@ -80,7 +80,7 @@
                 <div class="profile-details">
                     <!--<img src="profile.jpg" alt="profileImg">-->
                     <div class="name_job">
-                        <div class="name">Emmanuel Tanimowo</div>
+                        <div class="name">{{request.user|capfirst}}</div>
                     </div>
                 </div>
                 <a href="{% url 'logout' %}"><i class='bx bx-log-out' id="log_out"></i></a>

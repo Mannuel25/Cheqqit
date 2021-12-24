@@ -18,7 +18,7 @@
         <li>
             <a href="{% url 'inbox' %}">
                 <i class='bx bxs-inbox'></i>
-                <span class="links_name">Inbox</span>
+                <span class="links_name">Inbox&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{count}}</span>
             </a>
             <span class="tooltip">Inbox</span>
         </li>
@@ -54,36 +54,10 @@
             <div class="profile-details">
                 <!--<img src="profile.jpg" alt="profileImg">-->
                 <div class="name_job">
-                    <div class="name">Emmanuel Tanimowo</div>
+                    <div class="name">{{request.user|capfirst}}</div>
                 </div>
             </div>
             <a href="{% url 'logout' %}"><i class='bx bx-log-out' id="log_out"></i></a>
         </li>
     </ul>
 </div>
-<!-- <section class="home-section" style="background-color: white;">
-    <div class="text">Inbox</div> -->
-</section>
-<script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-
-    closeBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-        menuBtnChange();//calling the function(optional)
-    });
-
-    searchBtn.addEventListener("click", () => { 
-        sidebar.classList.toggle("open");
-        menuBtnChange(); 
-    });
-
-    function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-x")
-            } else {
-                closeBtn.classList.replace("bx-x", "bx-menu")
-            }
-        }
-</script>
