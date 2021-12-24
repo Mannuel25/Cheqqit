@@ -34,6 +34,8 @@ class InboxView(LoginRequiredMixin, ListView):
         all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
         print('\n\nall incomplete tasks:', all_incomplete)
         # print(all_incomplete[0])
+        print('-'*29)
+        print(f'\n\nCURENT USER: {self.request.user}')
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -49,16 +51,14 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
     template_name = 'create_task.html'
     success_url = reverse_lazy('inbox')
     login_url = 'login'
+    model = UserTasks
+    context_object_name = 'tasks'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-    model = UserTasks
-    login_url = 'login'
-    context_object_name = 'tasks'
-    success_url = reverse_lazy('inbox')
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print('CONTEXT DATA 1:', context)
