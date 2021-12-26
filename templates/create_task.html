@@ -4,140 +4,170 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} Add task/goal - Cheqqit {% endblock title %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'new.css' %}">
-    <script src="https://kit.fontawesome.com/109fe23f15.js" crossorigin="anonymous"></script>
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/static/favicons/site.webmanifest">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .btn-danger {
-        float: right;
-        margin: 12px;
-      }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %} Add task/goal - Cheqqit {% endblock title %}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'new.css' %}">
+  <script src="https://kit.fontawesome.com/109fe23f15.js" crossorigin="anonymous"></script>
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicons/site.webmanifest">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <!-- Fengyuan Chen's Datepicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+    integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+    integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'jquery-ui.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-timepicker-addon.css' %}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+    integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+    integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script> -->
+
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .btn-danger {
+      float: right;
+      margin: 12px;
+    }
 
     .btn-success {
       float: left;
       margin: 12px;
     }
-    </style>
+    .datepicker-panel {
+      z-index: 9999 !important; /* has to be larger than 1050 */
+    }
+  .datepicker-container {
+    z-index: 9999 !important; /* has to be larger than 1050 */
+  }
+  </style>
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="sidebar_btn">
-            <i class='bx bx-menu' id="btn"></i>
-        </div>
-        <ul class="nav-list">
-            <li>
-                <i class='bx bx-search'></i>
-                <input type="text" placeholder="Search...">
-                <span class="tooltip">Search</span>
-            </li>
-            <li>
-                <a href="{% url 'create_task' %}">
-                    <i class='bx bx-plus' style="font-size: 29px;"></i>
-                    <span class="links_name">Add task/goal</span>
-                </a>
-                <span class="tooltip">Add task/goal</span>
-            </li>
-            <li>
-                <a href="{% url 'inbox' %}">
-                    <i class='bx bxs-inbox'></i>
-                    <span class="links_name">Inbox&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{count}}</span>
-                </a>
-                <span class="tooltip">Inbox</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-calendar'></i>
-                    <span class="links_name">Today</span>
-                </a>
-                <span class="tooltip">Today</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-purchase-tag-alt'></i>
-                    <span class="links_name">Labels</span>
-                </a>
-                <span class="tooltip">Labels</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="far fa-check-square"></i>
-                    <span class="links_name">Completed Tasks</span>
-                </a>
-                <span class="tooltip">Completed Tasks</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-trash'></i>
-                    <span class="links_name">Trash</span>
-                </a>
-                <span class="tooltip">Trash</span>
-            </li>
-            <li class="profile">
-                <div class="profile-details">
-                    <!--<img src="profile.jpg" alt="profileImg">-->
-                    <div class="name_job">
-                        <div class="name">Emmanuel Tanimowo</div>
-                    </div>
-                </div>
-                <a href="{% url 'logout' %}"><i class='bx bx-log-out' id="log_out"></i></a>
-            </li>
-        </ul>
+  <div class="sidebar">
+    <div class="sidebar_btn">
+      <i class='bx bx-menu' id="btn"></i>
     </div>
-    <section class="home-section" style="background-color: white;">
-        <div class="text" style="margin-left: 34px;">Inbox</div>
-        <div style="margin-left: 34px;">
-          <form>
-              {% for task in tasks %}
-              {% if task.completed_task == False %}
-              <input type="checkbox">
-              <label>{{task|capfirst}}</label><br>
-              <hr size="1" width="91%">
-              {% endif %}
-              {% endfor %}
-          </form>
-          <!-- Modal -->
-          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <form action="" method="post">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <br>
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}"
-                        style="text-decoration: none; color: white;">Cancel</a></button>
-                    <br>
-                  </form>
-                </div>
-              </div>
+    <ul class="nav-list">
+      <li>
+        <i class='bx bx-search'></i>
+        <input type="text" placeholder="Search...">
+        <span class="tooltip">Search</span>
+      </li>
+      <li>
+        <a href="{% url 'create_task' %}">
+          <i class='bx bx-plus' style="font-size: 29px;"></i>
+          <span class="links_name">Add task/goal</span>
+        </a>
+        <span class="tooltip">Add task/goal</span>
+      </li>
+      <li>
+        <a href="{% url 'inbox' %}">
+          <i class='bx bxs-inbox'></i>
+          <span class="links_name">Inbox&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{count}}</span>
+        </a>
+        <span class="tooltip">Inbox</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-calendar'></i>
+          <span class="links_name">Today</span>
+        </a>
+        <span class="tooltip">Today</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-purchase-tag-alt'></i>
+          <span class="links_name">Labels</span>
+        </a>
+        <span class="tooltip">Labels</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="far fa-check-square"></i>
+          <span class="links_name">Completed Tasks</span>
+        </a>
+        <span class="tooltip">Completed Tasks</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-trash'></i>
+          <span class="links_name">Trash</span>
+        </a>
+        <span class="tooltip">Trash</span>
+      </li>
+      <li class="profile">
+        <div class="profile-details">
+          <!--<img src="profile.jpg" alt="profileImg">-->
+          <div class="name_job">
+            <div class="name">Emmanuel Tanimowo</div>
+          </div>
+        </div>
+        <a href="{% url 'logout' %}"><i class='bx bx-log-out' id="log_out"></i></a>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section" style="background-color: white;">
+    <div class="text" style="margin-left: 34px;">Inbox</div>
+    <div style="margin-left: 34px;">
+      <form>
+        {% for task in tasks %}
+        {% if task.completed_task == False %}
+        <input type="checkbox">
+        <label>{{task|capfirst}}</label><br>
+        <hr size="1" width="91%">
+        {% endif %}
+        {% endfor %}
+      </form>
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form action="" method="post" id="here">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <br>
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}"
+                    style="text-decoration: none; color: white;">Cancel</a></button>
+                <br>
+              </form>
             </div>
           </div>
         </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script>
-      $(document).ready(function () {
-        $("#staticBackdrop").modal("show");
-      });
-    </script>
+      </div>
+      </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $("#staticBackdrop").modal("show");
+    });
+  </script>
+
+  <script>
+    $(function () {$("#id_task_due_date").datepicker({container: '#here',})})
+  </script>
+
 </body>
 
 </html>
