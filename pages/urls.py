@@ -11,4 +11,5 @@ urlpatterns = [
     path('webapp/', WebappPageView.as_view(), name='webapp'),
     path('inbox/', InboxView.as_view(), name='inbox'),
     path('create_task/', CreateTaskView.as_view(), name='create_task'),
+    path('task_detail/', TaskDetailView.as_view(), name='task_detail'),
 ]
