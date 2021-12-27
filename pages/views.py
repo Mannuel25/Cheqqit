@@ -58,10 +58,10 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-# class TaskDetailView(LoginRequiredMixin, DetailView):
-#     model = Task
-#     context_object_name = 'task'
-#     template_name = 'task_detail.html'
-#     login_url = 'login'
+class TaskDetailView(LoginRequiredMixin, DetailView):
+     model = UserTasks
+     context_object_name = 'tasks'
+     template_name = 'task_detail.html'
+     login_url = 'login'
 
 
