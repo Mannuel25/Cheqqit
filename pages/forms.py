@@ -1,7 +1,7 @@
 from django import forms
 from .models import UserTasks
 
-class TaskDetails(forms.ModelForm):
+class TaskDetailsForm(forms.ModelForm):
     title = forms.CharField(max_length=100, widget= forms.TextInput
         (attrs={'placeholder':"Enter task/goal's title"}))
     description = forms.CharField(max_length=150, required=False, widget= forms.Textarea
