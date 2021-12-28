@@ -1,11 +1,13 @@
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import UserTasks
-from .forms import TaskDetails
+from .forms import TaskDetailsForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -47,7 +49,7 @@ class InboxView(LoginRequiredMixin, ListView):
         return context
 
 class CreateTaskView(LoginRequiredMixin, CreateView):
-    form_class = TaskDetails
+    form_class = TaskDetailsForm
     template_name = 'create_task.html'
     success_url = reverse_lazy('inbox')
     login_url = 'login'
@@ -58,10 +60,16 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TaskDetailView(LoginRequiredMixin, DetailView):
-     model = UserTasks
-     context_object_name = 'tasks'
-     template_name = 'task_detail.html'
-     login_url = 'login'
+@login_required(login_url='login')
+def UpdateTask(request, pk):
+        user_task = get_object_or_404(UserTasks, pk=pk)
+        form = TaskDetailsForm(instance=user_task)
+        if request.method == 'POST':
+            form = TaskDetailsForm(request.POST, instance=user_task)
+            if form.is_valid():
+                form.save()
+                return redirect('inbox')
+        context = {'form':form}
+        return render(request, 'update_task.html', context)
 
 
