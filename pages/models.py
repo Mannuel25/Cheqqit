@@ -5,7 +5,7 @@ import string, random
 
 
 def generate_random_slug():
-    return ''.join(random.choice(string.digits) for _ in range(6))
+    return ''.join(random.choice(string.digits) for _ in range(8))
 
 class UserTasks(models.Model):
     user = models.ForeignKey(
