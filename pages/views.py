@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from .models import UserTasks
-from .forms import TaskDetailsForm
+from .forms import TaskDetailsForm, ViewTaskDetailsForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -72,3 +72,10 @@ def UpdateTask(request, slug):
                 return redirect('inbox')
         context = {'form':form, 'slug':slug}
         return render(request, 'update_task.html', context)
+
+@login_required(login_url='login')
+def TaskDetail(request, slug):
+        user_task = get_object_or_404(UserTasks, slug=slug)
+        form = ViewTaskDetailsForm(instance=user_task)
+        context = {'form':form, 'slug':slug}
+        return render(request, 'task_detail.html', context)
