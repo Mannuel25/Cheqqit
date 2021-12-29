@@ -11,5 +11,5 @@ urlpatterns = [
     path('webapp/', WebappPageView.as_view(), name='webapp'),
     path('inbox/', InboxView.as_view(), name='inbox'),
     path('create_task/', CreateTaskView.as_view(), name='create_task'),
-    path('update_task/<int:pk>', UpdateTask, name='update_task'),
+    path('update_task/<slug:slug>/', UpdateTask, name='update_task'),
 ]
