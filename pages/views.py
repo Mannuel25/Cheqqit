@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse
 from .models import UserTasks
 from .forms import TaskDetailsForm
 from django.contrib.auth.decorators import login_required
@@ -61,15 +62,13 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
 
 
 @login_required(login_url='login')
-def UpdateTask(request, pk):
-        user_task = get_object_or_404(UserTasks, pk=pk)
+def UpdateTask(request, slug):
+        user_task = get_object_or_404(UserTasks, slug=slug)
         form = TaskDetailsForm(instance=user_task)
         if request.method == 'POST':
             form = TaskDetailsForm(request.POST, instance=user_task)
             if form.is_valid():
                 form.save()
                 return redirect('inbox')
-        context = {'form':form}
+        context = {'form':form, 'slug':slug}
         return render(request, 'update_task.html', context)
-
-
