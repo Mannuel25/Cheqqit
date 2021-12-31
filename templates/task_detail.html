@@ -45,7 +45,8 @@
                         {% csrf_token %}
                         {{ form|crispy }}
                         <br>
-                        <button type="button" class="btn btn-success"><a href="{% url 'update_task' slug=form.instance.slug %}"
+                        <button type="button" class="btn btn-success"><a
+                                href="{% url 'update_task' slug=form.instance.slug %}"
                                 style="text-decoration: none; color: white;">Update task/goal</a></button>
                         <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}"
                                 style="text-decoration: none; color: white;">Delete task/goal</a></button>
