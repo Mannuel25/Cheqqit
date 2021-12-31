@@ -75,7 +75,7 @@ def UpdateTask(request, slug):
 
 @login_required(login_url='login')
 def TaskDetail(request, slug):
-        user_task = get_object_or_404(UserTasks, slug=slug)
-        form = ViewTaskDetailsForm(instance=user_task)
-        context = {'form':form, 'slug':slug}
-        return render(request, 'task_detail.html', context)
+    user_task = get_object_or_404(UserTasks, slug=slug)
+    form = ViewTaskDetailsForm(instance=user_task)
+    context = {'form':form, 'slug':slug}
+    return render(request, 'task_detail.html', context)
