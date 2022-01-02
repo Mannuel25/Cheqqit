@@ -15,3 +15,5 @@ urlpatterns = [
     path('task_detail/<slug:slug>/', TaskDetail, name='task_detail'),
     path('delete_task/<slug:slug>/', DeleteTask, name='delete_task')
 ]
+
+handler404 = 'pages.views.page_not_found'
