@@ -79,14 +79,11 @@ def TaskDetail(request, slug):
     context = {'form':form, 'slug':slug}
     return render(request, 'task_detail.html', context)
 
-# class TaskDeleteView(LoginRequiredMixin, UserPassesTextMixins, DeleteView):
-#     model = UserTaks
-#     template_name = 'task_delete.html'
-#     success_url = reverse_lazy('inbox')
-#     login_url = 'login'
-
 @login_required(login_url='login')
 def DeleteTask(request, slug):
     user_tasks = UserTasks.objects.get(slug=slug)
     user_tasks.delete()
     return redirect('inbox')
+
+def page_not_found(request, exception):
+    return render(request, '404.html')
