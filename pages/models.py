@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 import string, random
+from django.urls import reverse
 
 
 def generate_random_slug():
@@ -21,7 +22,9 @@ class UserTasks(models.Model):
     def __str__(self):
         return self.title
     
-
+    def get_absolute_url(self):
+        return reverse('inbox')
+    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title + '-' + generate_random_slug())
