@@ -45,10 +45,10 @@
                         {% csrf_token %}
                         {{ form|crispy }}
                         <br>
-                        <button type="button" class="btn btn-success"><a
+                        <button type="button" class="btn btn-success" box-shadow="none"><a
                                 href="{% url 'update_task' slug=form.instance.slug %}"
                                 style="text-decoration: none; color: white;">Update task</a></button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><a style="text-decoration: none; color: white;">Delete task</a></button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" box-shadow="none"><a style="text-decoration: none; color: white;">Delete task</a></button>
                         <br>
                     </form>
                 </div>
@@ -61,14 +61,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" box-shadow="none"></button>
                 </div>
                 <div class="modal-body">
                     Are you certain you want to delete <b>{{ task_title }}</b>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><a href="{% url 'delete_task' slug=form.instance.slug %}" style="text-decoration: none; color: white;">Yes</a></button>
-                    <button type="button" class="btn btn-primary"><a href="{% url 'inbox' %}" style="text-decoration: none; color: white;">No</a></button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><a href="{% url 'delete_task' slug=form.instance.slug %}" style="text-decoration: none; color: white;" box-shadow="none">Yes</a></button>
+                    <button type="button" class="btn btn-success" box-shadow="none"><a href="{% url 'inbox' %}" style="text-decoration: none; color: white;">No</a></button>
                 </div>
             </div>
         </div>
