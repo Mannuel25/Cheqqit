@@ -55,9 +55,12 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('inbox')
     login_url = 'login'
    
-
     def form_valid(self, form):
         form.instance.user = self.request.user
+        # print('FORM:', form, '\n\n')
+        # print('\n\nform title:', form.title)
+        # store_form = {'form':form}
+        # print('\n\nstored form:', form, '\n\n')
         return super().form_valid(form)
 
 @login_required(login_url='login')
