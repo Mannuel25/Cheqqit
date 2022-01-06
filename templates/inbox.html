@@ -359,7 +359,7 @@
             <form>
                 {% for task in tasks %}
                 {% if task.completed_task == False %}
-                <input type="checkbox">
+                <input type="checkbox" style="width: 16.5px; height: 16px; vertical-align: middle;">
                 <label><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 &emsp;{{ task.description }} || {{task.task_due_date}} {{task.task_due_time}}
                 <hr size="1" width="91%">
