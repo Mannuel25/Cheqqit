@@ -35,7 +35,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             form =  AllTasksForm(self.request.POST or None)
             if form.is_valid():
                 form.save() 
-                return redirect('inbox')
+                return redirect('tasks')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
