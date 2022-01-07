@@ -43,3 +43,9 @@ class ViewTaskDetailsForm(forms.ModelForm):
     class Meta(forms.ModelForm):
         model = UserTasks
         fields = ('title', 'description','completed_task','task_due_date','task_due_time',)
+
+class AllTasksForm(forms.ModelForm):
+
+    class Meta(forms.ModelForm):
+        model = UserTasks
+        fields = ('completed_task',)
