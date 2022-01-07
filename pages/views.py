@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from .models import UserTasks
-from .forms import TaskDetailsForm, ViewTaskDetailsForm
+from .forms import TaskDetailsForm, ViewTaskDetailsForm, AllTasksForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -57,10 +57,6 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
    
     def form_valid(self, form):
         form.instance.user = self.request.user
-        # print('FORM:', form, '\n\n')
-        # print('\n\nform title:', form.title)
-        # store_form = {'form':form}
-        # print('\n\nstored form:', form, '\n\n')
         return super().form_valid(form)
 
 @login_required(login_url='login')
@@ -91,3 +87,38 @@ def DeleteTask(request, slug):
 
 def page_not_found(request, exception):
     return render(request, '404.html')
+
+
+class AllTasksView(LoginRequiredMixin, CreateView, ListView):
+    form_class = AllTasksForm
+    template_name = 'tasks.html'
+    success_url = reverse_lazy('inbox')
+    login_url = 'login'
+    model = UserTasks
+    context_object_name = 'tasks'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print('CONTEXT DATA 1:', context)
+        all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
+        print('ALL USER TASKS 2:', all_tasks)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(completed_task=False).count()
+        print('CONTEXT 2:', context)
+        all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+        print('\n\nall incomplete tasks:', all_incomplete)
+        # print(all_incomplete[0])
+
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(
+                title__contains=search_input)
+
+        context['search_input'] = search_input
+
+        return context
