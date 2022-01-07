@@ -358,17 +358,32 @@
         <div style="margin-left: 34px;">
             <form id="form" method="post" action="">
                 {% csrf_token %}
-                {% for task in tasks %}
-                {% if task.completed_task == False %}
-                <input type="checkbox" onchange="$('#form').submit();" name="checkbox"
-                    style="width: 16.5px; height: 16px; vertical-align: middle;">
+                {% for task in all_incomplete %}
+                <!-- {% if task.completed_task == False %} -->
+                <input type="checkbox" onchange="$('#form').submit();" 
+                    style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="{{ task }}">
+
+                <!-- <input type="checkbox" onchange="$('#form').submit();" name="checkbox"
+                    style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="meee"> -->
                 <label><a href="{% url 'task_detail' task.slug %}"
                     style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 &emsp;{{ task.description }} || {{task.task_due_date}} {{task.task_due_time}}
                 <hr size="1" width="91%">
-                {% endif %}
+                <!-- {% endif %} -->
                 {% endfor %}
             </form>
+            <!-- <form method="post">
+                {% csrf_token %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Apple" id="apple" name="fruits">
+                    <label class="form-check-label" for="apple">Apple</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Mango" id="mango" name="fruits">
+                    <label class="form-check-label" for="mango">Mango</label>
+                </div>
+                <button type="submit">Submit</button>
+            </form> -->
             <!-- <form id="form" method="post" action="">
                 {% csrf_token %}
                 <input type="checkbox" onchange="$('#form').submit();" name="checkbox" class="checkbox" />
