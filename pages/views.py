@@ -19,13 +19,24 @@ class FeaturesPageView(TemplateView):
 class WebappPageView(TemplateView):
     template_name = 'webapp.html'
 
-class InboxView(LoginRequiredMixin, ListView):
+class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
+    form_class = AllTasksForm
     template_name = 'inbox.html'
     login_url = 'login'
     context_object_name = 'tasks'
-    success_url = reverse_lazy('inbox')
+    success_url = reverse_lazy('tasks')
+    
+    def form_valid(self, form):
+        # form.instance.user = self.request.user
+        # return super().form_valid(form)
 
+        if self.request.method == 'POST':
+            form =  AllTasksForm(self.request.POST or None)
+            if form.is_valid():
+                form.save() 
+                return redirect('inbox')
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print('CONTEXT DATA 1:', context)
@@ -52,7 +63,7 @@ class InboxView(LoginRequiredMixin, ListView):
 class CreateTaskView(LoginRequiredMixin, CreateView):
     form_class = TaskDetailsForm
     template_name = 'create_task.html'
-    success_url = reverse_lazy('inbox')
+    success_url = reverse_lazy('tasks')
     login_url = 'login'
    
     def form_valid(self, form):
@@ -67,7 +78,7 @@ def UpdateTask(request, slug):
             form = TaskDetailsForm(request.POST, instance=user_task)
             if form.is_valid():
                 form.save()
-                return redirect('inbox')
+                return redirect('tasks')
         context = {'form':form, 'slug':slug}
         return render(request, 'update_task.html', context)
 
@@ -83,7 +94,7 @@ def TaskDetail(request, slug):
 def DeleteTask(request, slug):
     user_tasks = UserTasks.objects.get(slug=slug)
     user_tasks.delete()
-    return redirect('inbox')
+    return redirect('tasks')
 
 def page_not_found(request, exception):
     return render(request, '404.html')
@@ -98,9 +109,14 @@ class AllTasksView(LoginRequiredMixin, CreateView, ListView):
     context_object_name = 'tasks'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-    
+        # form.instance.user = self.request.user
+        # return super().form_valid(form)
+
+        if self.request.method == 'POST':
+            form =  AllTasksForm(self.request.POST or None)
+            if form.is_valid():
+                form.save() 
+                return redirect('inbox')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
