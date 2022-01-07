@@ -356,11 +356,14 @@
     <section class="home-section" style="background-color: white;">
         <div class="text" style="margin-left: 34px;">Inbox</div>
         <div style="margin-left: 34px;">
-            <form>
+            <form id="form" method="post" action="">
+                {% csrf_token %}
                 {% for task in tasks %}
                 {% if task.completed_task == False %}
-                <input type="checkbox" name="completed_task" style="width: 16.5px; height: 16px; vertical-align: middle;">
-                <label><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
+                <input type="checkbox" onchange="$('#form').submit();" name="checkbox"
+                    style="width: 16.5px; height: 16px; vertical-align: middle;">
+                <label><a href="{% url 'task_detail' task.slug %}"
+                    style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 &emsp;{{ task.description }} || {{task.task_due_date}} {{task.task_due_time}}
                 <hr size="1" width="91%">
                 {% endif %}
@@ -370,7 +373,6 @@
                 {% csrf_token %}
                 <input type="checkbox" onchange="$('#form').submit();" name="checkbox" class="checkbox" />
             </form> -->
-        <a href="{% url 'tasks' %}">here</a>
     </section>
     <script>
         let sidebar = document.querySelector(".sidebar");
