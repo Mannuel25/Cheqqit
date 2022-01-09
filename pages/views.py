@@ -30,10 +30,10 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
     
     def form_valid(self, form):
         if self.request.method == 'POST':
-            fruits = self.request.POST.getlist('fruits')
-            print('\n\n---FRUITS:', fruits)
-            self.store_task = [i for i in fruits]
-            print('\n\nSTORE TASK 1:', self.store_task)
+            # fruits = self.request.POST.getlist('fruits')
+            # print('\n\n---FRUITS:', fruits)
+            # self.store_task = [i for i in fruits]
+            # print('\n\nSTORE TASK 1:', self.store_task)
 
             form =  AllTasksForm(self.request.POST or None)
             if form.is_valid():
@@ -42,17 +42,17 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # print('CONTEXT DATA 1:', context)
+        print('CONTEXT DATA 1:', context)
         all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
-        # print('ALL USER TASKS 2:', all_tasks)
+        print('ALL USER TASKS 2:', all_tasks)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['count'] = context['tasks'].filter(completed_task=False).count()
-        # print('CONTEXT 2:', context)
+        print('CONTEXT 2:', context)
         all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
-        # print('\n\nall incomplete tasks:', all_incomplete)
+        print('\n\nall incomplete tasks:', all_incomplete)
         # print(all_incomplete[0])
-        # print('-'*29)
-        # print(f'\n\nCURENT USER: {self.request.user}')
+        print('-'*29)
+        print(f'\n\nCURENT USER: {self.request.user}')
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -61,17 +61,11 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
 
         context['search_input'] = search_input
         context['all_incomplete'] = all_incomplete
-        context['fruits'] = self.store_task
+        # context['fruits'] = self.store_task
         # print('--===SELF.FRUITS:', self.fruits)
-        print('\n\n-=============>>TEMPLATE NAME:', self.template_name)
-        # for i in self.fruits:
-        #     if i in context['all_incomplete']:
-        #         context['all_incomplete'].pop(i)
+        # print('\n\n-=============>>TEMPLATE NAME:', self.template_name)
 
         print('>>>>>>>>>CONTEXT 3!!:', context)
-
-        print('\n\n------------STORE TASK 2:', self.store_task)
-
 
         return context
 
@@ -126,30 +120,29 @@ class AllTasksView(LoginRequiredMixin, CreateView, ListView):
     
     def form_valid(self, form):
         if self.request.method == 'POST':
-            fruits = self.request.POST.getlist('fruits')
-            print('\n\n---FRUITS all:', fruits)
-            self.store_task = [i for i in fruits]
-            print('\n\nSTORE TASK 1 all:', self.store_task)
+            # fruits = self.request.POST.getlist('fruits')
+            # print('\n\n---FRUITS all:', fruits)
+            # self.store_task = [i for i in fruits]
+            # print('\n\nSTORE TASK 1 all:', self.store_task)
 
             form =  AllTasksForm(self.request.POST or None)
             if form.is_valid():
                 form.save() 
-                return render(self.request, 'inbox.html', fruits)
                 return redirect('inbox')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # print('CONTEXT DATA 1:', context)
+        print('CONTEXT DATA 1:', context)
         all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
-        # print('ALL USER TASKS 2:', all_tasks)
+        print('ALL USER TASKS 2:', all_tasks)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['count'] = context['tasks'].filter(completed_task=False).count()
-        # print('CONTEXT 2:', context)
+        print('CONTEXT 2:', context)
         all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
-        # print('\n\nall incomplete tasks:', all_incomplete)
+        print('\n\nall incomplete tasks:', all_incomplete)
         # print(all_incomplete[0])
-        # print('-'*29)
-        # print(f'\n\nCURENT USER: {self.request.user}')
+        print('-'*29)
+        print(f'\n\nCURENT USER: {self.request.user}')
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -158,16 +151,7 @@ class AllTasksView(LoginRequiredMixin, CreateView, ListView):
 
         context['search_input'] = search_input
         context['all_incomplete'] = all_incomplete
-        context['fruits'] = self.store_task
-        # print('--===SELF.FRUITS:', self.fruits)
-        print('\n\n-=============>>TEMPLATE NAME all:', self.template_name)
-        # for i in self.fruits:
-        #     if i in context['all_incomplete']:
-        #         context['all_incomplete'].pop(i)
 
         print('>>>>>>>>>CONTEXT 3!!:', context)
-
-        print('\n\n------------STORE TASK 2 all:', self.store_task)
-
 
         return context
