@@ -360,11 +360,10 @@
                 {% csrf_token %}
                 {% for task in all_incomplete %}
                 <!-- {% if task.completed_task == False %} -->
-                <input type="checkbox" onchange="$('#form').submit();" 
-                    style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="{{ task }}">
+                <input type="checkbox" style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="{{ task }}">
 
-                <!-- <input type="checkbox" onchange="$('#form').submit();" name="checkbox"
-                    style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="meee"> -->
+                <!-- <input type="checkbox" onchange="$('#form').submit();" 
+                    style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="{{ task }}"> -->
                 <label><a href="{% url 'task_detail' task.slug %}"
                     style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 &emsp;{{ task.description }} || {{task.task_due_date}} {{task.task_due_time}}
