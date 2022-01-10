@@ -26,18 +26,6 @@ class InboxView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     success_url = reverse_lazy('inbox')
     
-    # def form_valid(self, form):
-    #     if self.request.method == 'POST':
-    #         # fruits = self.request.POST.getlist('fruits')
-    #         # print('\n\n---FRUITS:', fruits)
-    #         # self.store_task = [i for i in fruits]
-    #         # print('\n\nSTORE TASK 1:', self.store_task)
-
-    #         form =  AllTasksForm(self.request.POST or None)
-    #         if form.is_valid():
-    #             form.save() 
-    #             return redirect('tasks')
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print('CONTEXT DATA 1:', context)
