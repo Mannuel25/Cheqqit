@@ -60,7 +60,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" box-shadow="none"></button>
                 </div>
                 <div class="modal-body">
@@ -68,7 +67,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><a href="{% url 'delete_task' slug=form.instance.slug %}" style="text-decoration: none; color: white;" box-shadow="none">Yes</a></button>
-                    <button type="button" class="btn btn-light" box-shadow="none" style="background-color: transparent; border: 1px solid black;"><a href="{% url 'inbox' %}" style="text-decoration: none; color: black;">No</a></button>
+                    <button type="button" class="btn btn-light" box-shadow="none" data-bs-dismiss="modal" style="background-color: transparent; border: 1px solid black;"><a style="text-decoration: none; color: black;">No</a></button>
                 </div>
             </div>
         </div>
