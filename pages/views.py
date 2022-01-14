@@ -36,7 +36,7 @@ class InboxView(LoginRequiredMixin, ListView):
         print('CONTEXT 2:', context)
         all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
         print('\n\nall incomplete tasks:', all_incomplete)
-        # print(all_incomplete[0])
+        
         print('-'*29)
         print(f'\n\nCURENT USER: {self.request.user}')
 
@@ -47,7 +47,6 @@ class InboxView(LoginRequiredMixin, ListView):
 
         context['search_input'] = search_input
         context['all_incomplete'] = all_incomplete
-        # context['fruits'] = self.store_task
         
         return context
 
