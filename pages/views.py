@@ -48,11 +48,7 @@ class InboxView(LoginRequiredMixin, ListView):
         context['search_input'] = search_input
         context['all_incomplete'] = all_incomplete
         # context['fruits'] = self.store_task
-        # print('--===SELF.FRUITS:', self.fruits)
-        # print('\n\n-=============>>TEMPLATE NAME:', self.template_name)
-
-        print('>>>>>>>>>CONTEXT 3!!:', context)
-
+        
         return context
 
 class CreateTaskView(LoginRequiredMixin, CreateView):
