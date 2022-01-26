@@ -400,8 +400,9 @@
                 <label><a href="{% url 'task_detail' task.slug %}"
                         style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 {% if task.description != '' and task.task_due_time != None and task.task_due_date != None %}
-                &emsp; {{ task.description }} || {{task.task_due_date}} {{task.task_due_time}}
-                {% elif task.description != '' and task.task_due_time == None and task.task_due_date == None %}
+                <div style="margin-left: 22px;">{{ task.description }}</div>
+                <div style="margin-left: 22px;">{{task.task_due_date}} || {{task.task_due_time}}</div>
+                <!-- {% elif task.description != '' and task.task_due_time == None and task.task_due_date == None %}
                 &emsp; {{ task.description }}
                 {% elif task.description == '' and task.task_due_time == None and task.task_due_date != None %}
                 &emsp; {{task.task_due_date}}
@@ -413,9 +414,10 @@
                 &emsp; {{ task.description }} || {{task.task_due_time}}
                 {% elif task.description == '' and task.task_due_time != None and task.task_due_date != None %}
                 &emsp; {{task.task_due_date}} || {{task.task_due_time}}
-                {% elif task.description == '' and task.task_due_time == None and task.task_due_date == None %}
+                {% elif task.description == '' and task.task_due_time == None and task.task_due_date == None %} -->
                 {% endif %}
-                <hr size="1" width="91%">
+                <!-- <hr size="1" width="91%">-->
+                <hr>
                 {% endfor %}
             </form>
     </section>
