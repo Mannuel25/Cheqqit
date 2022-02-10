@@ -392,14 +392,14 @@
     <section class="home-section" style="background-color: white;">
         <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
         <div style="margin-left: 34px;">
+            <a href="{% url 'tasks' %}">Visit Here for tasks</a>
             <form id="form" method="post" action="">
                 {% csrf_token %}
-                {% for task in all_incomplete %}
+                {% for task in tasks %}
                 <!-- <input type="checkbox" style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="{{ task }}">  -->
                 <input type="checkbox" onchange="$('#form').submit();" name="checkbox"
-                    style="width: 16.5px; height: 16px; vertical-align: middle;">
-                <label><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
-                <a href="{% url 'tasks' %}">here</a>
+                    value="{{ task }}" style="width: 16.5px; height: 16px; vertical-align: middle;">
+                <label for="task"><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 {% if task.description != '' and task.task_due_time != None and task.task_due_date != None %}
                 <div style="margin-left: 22px; color: lightslategrey;">{{ task.description }}</div>
                 <div style="margin-left: 22px;"><i class='bx bx-calendar' style="font-size: 14.5px;"> {{task.task_due_date}}</i>  ||  <i class='bx bx-time' style="font-size: 14.5px;"> {{task.task_due_time}}</i></div>
