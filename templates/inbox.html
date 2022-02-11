@@ -396,7 +396,6 @@
             <form id="form" method="post" action="">
                 {% csrf_token %}
                 {% for task in tasks %}
-                <!-- <input type="checkbox" style="width: 16.5px; height: 16px; vertical-align: middle;" name="fruits" value="{{ task }}">  -->
                 <input type="checkbox" onchange="$('#form').submit();" name="checkbox"
                     value="{{ task }}" style="width: 16.5px; height: 16px; vertical-align: middle;">
                 <label for="task"><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
