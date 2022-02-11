@@ -57,7 +57,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
     template_name = 'inbox.html'
     login_url = 'login'
     context_object_name = 'tasks'
-    success_url = reverse_lazy('inbox')
+    # success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
         # form.instance.user = self.request.user
@@ -73,6 +73,69 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 print(F'FORM: {form}')
                 # print('LIST:', list_)
                 # return redirect('tasks')
+                # return redirect('inbox')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print('\n\n--CONTEXT DATA 1:', context)
+        all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
+        # print('ALL USER TASKS 2:', all_tasks)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(completed_task=False).count()
+        all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+        print('CONTEXT 2:', context)
+        try: 
+            print(F' \n\n\nUNDOnE TASK: {undone_tasks[-1]}')
+            print(F' \n\n\nALL UNDONE TASK: {undone_tasks}')
+            join_undone_tasks = ''.join(i for i in undone_tasks[-1])
+        except: 
+            print('error occured')
+            print('LENGTH OF UNDONE TASKS IS:',len(undone_tasks))
+        else: 
+            just_completed_task = []
+            print('NO ERROR!!')
+            print(F' n\n\nALL UNDOE TASKS: {undone_tasks[-1]}')
+            join_undone_task = ''.join(i for i in undone_tasks[-1])
+            print('UNDONE TASKS:',join_undone_task)
+            just_completed_task.append(join_undone_task)
+            print('USERTASKS:',UserTasks.objects.all())
+            UserTasks.objects.filter(title=join_undone_task).delete()
+            context['no_of_incomplete_tasks'] = len(undone_tasks)
+            UserTasks.objects.filter(title=join_undone_tasks).completed_task = True
+        undone_tasks.clear()
+        print('undone tasks length:', len(undone_tasks))
+        print('\n\nall incomplete tasks:', all_incomplete)
+        
+        print(f'\n\nCURENT USER: {self.request.user}')
+        context['done'] = len(undone_tasks)
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(
+                title__contains=search_input)
+        context['search_input'] = search_input
+        return context
+
+class AllTasksView(LoginRequiredMixin, CreateView, ListView):
+    model = UserTasks
+    form_class = AllTasksForm
+    template_name = 'tasks.html'
+    login_url = 'login'
+    context_object_name = 'tasks'
+    # success_url = reverse_lazy('inbox')
+
+    def form_valid(self, form):
+        # form.instance.user = self.request.user
+        # return super().form_valid(form)
+
+        if self.request.method == 'POST':
+            form =  AllTasksForm(self.request.POST or None)
+            list_ = self.request.POST.getlist('checkbox')
+            for i in list_:
+                undone_tasks.append(i)
+            if form.is_valid():
+                form.save() 
+                print(F'FORM: {form}')
+                # print('LIST:', list_)
                 return redirect('inbox')
 
     def get_context_data(self, **kwargs):
@@ -81,6 +144,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
         # print('ALL USER TASKS 2:', all_tasks)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
+        # context['count'] = len(undone_tasks)
         context['count'] = len(undone_tasks)
         # context['count'] = context['tasks'].filter(completed_task=False).count()
         all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
@@ -115,36 +179,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         context['search_input'] = search_input
         return context
 
-class TaskView(LoginRequiredMixin, ListView):
-    model = UserTasks
-    template_name = 'inbox.html'
-    login_url = 'login'
-    context_object_name = 'tasks'
-    success_url = reverse_lazy('inbox')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        print('CONTEXT DATA 1:', context)
-        all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
-        print('ALL USER TASKS 2:', all_tasks)
-        context['tasks'] = context['tasks'].filter(user=self.request.user)
-        context['count'] = context['tasks'].filter(completed_task=False).count()
-        print('CONTEXT 2:', context)
-        all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
-        print('\n\nall incomplete tasks:', all_incomplete)
-        
-        print('-'*29)
-        print(f'\n\nCURENT USER: {self.request.user}')
-
-        search_input = self.request.GET.get('search-area') or ''
-        if search_input:
-            context['tasks'] = context['tasks'].filter(
-                title__contains=search_input)
-
-        context['search_input'] = search_input
-        context['all_incomplete'] = all_incomplete
-        
-        return context
 
 # class CreateTaskView(LoginRequiredMixin, CreateView):
 #     form_class = TaskDetailsForm
@@ -249,3 +283,16 @@ class AllTasksView(LoginRequiredMixin, CreateView, ListView):
                 title__contains=search_input)
         context['search_input'] = search_input
         return context
+
+            
+        value="{{task}}"
+
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
