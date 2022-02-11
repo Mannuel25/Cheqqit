@@ -3,7 +3,7 @@ from .views import HomePageView
 from .views import FeaturesPageView
 from .views import WebappPageView
 from .views import InboxView
-from .views import CreateTaskView, UpdateTask, TaskDetail, DeleteTask
+from .views import CreateTaskView, UpdateTask, TaskDetail, DeleteTask, AllTasksView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('create_task/', CreateTaskView.as_view(), name='create_task'),
     path('update_task/<slug:slug>/', UpdateTask, name='update_task'),
     path('task_detail/<slug:slug>/', TaskDetail, name='task_detail'),
+    path('tasks/', AllTasksView.as_view(), name='tasks'),
     path('delete_task/<slug:slug>/', DeleteTask, name='delete_task'),
 ]
 
