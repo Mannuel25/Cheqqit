@@ -73,7 +73,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 print(F'FORM: {form}')
                 # print('LIST:', list_)
                 # return redirect('tasks')
-                # return redirect('inbox')
+                return redirect('inbox')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
