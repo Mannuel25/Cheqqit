@@ -392,7 +392,7 @@
     <section class="home-section" style="background-color: white;">
         <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
         <div style="margin-left: 34px;">
-            <a href="{% url 'tasks' %}">Visit Here for tasks</a>
+            <!-- <a href="{% url 'tasks' %}">Visit Here for tasks</a> -->
             <form id="form" method="post" action="">
                 {% csrf_token %}
                 {% for task in tasks %}
