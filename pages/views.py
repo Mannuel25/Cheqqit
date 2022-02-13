@@ -60,9 +60,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
     # success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
-        # form.instance.user = self.request.user
-        # return super().form_valid(form)
-
         if self.request.method == 'POST':
             form =  AllTasksForm(self.request.POST or None)
             list_ = self.request.POST.getlist('checkbox')
@@ -71,7 +68,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             if form.is_valid():
                 form.save() 
                 print(F'FORM: {form}')
-                # print('LIST:', list_)
                 # return redirect('tasks')
                 return redirect('inbox')
 
