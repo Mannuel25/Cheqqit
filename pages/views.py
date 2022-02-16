@@ -16,7 +16,7 @@ class FeaturesPageView(TemplateView):
 class WebappPageView(TemplateView):
     template_name = 'webapp.html'
 
-undone_tasks = []
+done_tasks = []
 class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
@@ -30,46 +30,41 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             form =  AllTasksForm(self.request.POST or None)
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
-                undone_tasks.append(i)
+                done_tasks.append(i)
             if form.is_valid():
                 form.save() 
-                print(F'FORM: {form}')
-                # print('LIST:', list_)
                 return redirect('inbox')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print('\n\n--CONTEXT DATA 1:', context)
-        all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
+        # all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
         context['tasks'] = context['tasks'].filter(user=self.request.user)
-        context['count'] = context['tasks'].filter(completed_task=False).count()
+        context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
         all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
-        print('CONTEXT 2:', context)
         try: 
-            print(F' \n\n\nUNDOnE TASK: {undone_tasks[-1]}')
-            print(F' \n\n\nALL UNDONE TASK: {undone_tasks}')
-            join_undone_tasks = ''.join(i for i in undone_tasks[-1])
+            # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
+            # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
+            join_done_tasks = ''.join(i for i in done_tasks[-1])
         except: 
-            print('error occured')
-            print('LENGTH OF UNDONE TASKS IS:',len(undone_tasks))
+            # print('error occured')
+            # print('LENGTH OF UNDONE TASKS IS:',len(done_tasks))
+            pass
         else: 
             just_completed_task = []
-            print('NO ERROR!!')
-            print(F' n\n\nALL UNDOE TASKS: {undone_tasks[-1]}')
-            join_undone_task = ''.join(i for i in undone_tasks[-1])
-            print('UNDONE TASKS:',join_undone_task)
+            # print('NO ERROR!!')
+            # print(F' n\n\nALL UNDOE TASKS: {done_tasks[-1]}')
+            join_undone_task = ''.join(i for i in done_tasks[-1])
+            # print('UNDONE TASKS:',join_undone_task)
             just_completed_task.append(join_undone_task)
-            print('just completed:', just_completed_task)
-            print('USERTASKS:',UserTasks.objects.all())
+            # print('just completed:', just_completed_task)
+            # print('USERTASKS:',UserTasks.objects.all())
             UserTasks.objects.filter(title=join_undone_task).delete()
-            context['count'] = context['tasks'].filter(completed_task=False).count()
-            UserTasks.objects.filter(title=join_undone_tasks).completed_task = True
-        undone_tasks.clear()
-        print('undone tasks length:', len(undone_tasks))
-        print('\n\nall incomplete tasks:', all_incomplete)
-        
-        print(f'\n\nCURENT USER: {self.request.user}')
-        context['done'] = len(undone_tasks)
+            context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
+            UserTasks.objects.filter(title=join_done_tasks).completed_task = True
+        done_tasks.clear()
+        # print('undone tasks length:', len(done_tasks))
+        # print('\n\nall incomplete tasks:', all_incomplete)
+    
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
