@@ -392,7 +392,6 @@
     <section class="home-section" style="background-color: white;">
         <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
         <div style="margin-left: 34px;">
-            <h6>You have {{count}} incomplete tasks</h6>
             <form id="form" method="post" action="">
                 {% csrf_token %}
                 {% for task in tasks %}
