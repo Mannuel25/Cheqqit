@@ -56,7 +56,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             # print('UNDONE TASKS:',join_done_task)
             
             # print('USERTASKS:',UserTasks.objects.all())
-            context['tasks'].objects.filter(title=join_done_task).delete()
+            UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
         done_tasks.clear()
         # print('undone tasks length:', len(done_tasks))
