@@ -40,7 +40,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         # all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
-        all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+        # all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
         try: 
             # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
             # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
@@ -50,17 +50,14 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             # print('LENGTH OF UNDONE TASKS IS:',len(done_tasks))
             pass
         else: 
-            just_completed_task = []
             # print('NO ERROR!!')
             # print(F' n\n\nALL UNDOE TASKS: {done_tasks[-1]}')
-            join_undone_task = ''.join(i for i in done_tasks[-1])
-            # print('UNDONE TASKS:',join_undone_task)
-            just_completed_task.append(join_undone_task)
-            # print('just completed:', just_completed_task)
+            join_done_task = ''.join(i for i in done_tasks[-1])
+            # print('UNDONE TASKS:',join_done_task)
+            
             # print('USERTASKS:',UserTasks.objects.all())
-            UserTasks.objects.filter(title=join_undone_task).delete()
+            context['tasks'].objects.filter(title=join_done_task).delete()
             context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
-            UserTasks.objects.filter(title=join_done_tasks).completed_task = True
         done_tasks.clear()
         # print('undone tasks length:', len(done_tasks))
         # print('\n\nall incomplete tasks:', all_incomplete)
@@ -112,3 +109,6 @@ def DeleteTask(request, slug):
 
 def page_not_found(request, exception):
     return render(request, '404.html')
+
+def server_error(request, exception=None):
+    return render(request, '500.html')
