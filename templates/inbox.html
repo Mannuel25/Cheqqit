@@ -346,7 +346,6 @@
             <li>
                 <a href="{% url 'inbox' %}">
                     <i class='bx bxs-inbox'></i>
-                    <!-- {% if {{count}} < } -->
                     <span class="links_name">Inbox&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{count}}</span>
                 </a>
                 <span class="tooltip">Inbox</span>
@@ -393,7 +392,7 @@
     <section class="home-section" style="background-color: white;">
         <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
         <div style="margin-left: 34px;">
-            <!-- <a href="{% url 'tasks' %}">Visit Here for tasks</a> -->
+            <h6>You have {{count}} incomplete tasks</h6>
             <form id="form" method="post" action="">
                 {% csrf_token %}
                 {% for task in tasks %}
@@ -442,7 +441,9 @@
                 closeBtn.classList.replace("bx-x", "bx-menu")
             }
         }
-        // window.location.reload(true);
+        document.getElementById("form").onsubmit = function () {
+            location.reload(true);
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
