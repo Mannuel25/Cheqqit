@@ -86,7 +86,7 @@ def UpdateTask(request, slug):
             form = TaskDetailsForm(request.POST, instance=user_task)
             if form.is_valid():
                 form.save()
-                return redirect('tasks')
+                return redirect('inbox')
         context = {'form':form, 'slug':slug}
         return render(request, 'update_task.html', context)
 
