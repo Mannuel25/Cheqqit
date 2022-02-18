@@ -63,7 +63,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" box-shadow="none"></button>
                 </div>
                 <div class="modal-body">
-                    Are you certain you want to delete <b>{{ task_title }}</b>?
+                    Are you sure you want to delete <b>{{ task_title }}</b>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><a href="{% url 'delete_task' slug=form.instance.slug %}" style="text-decoration: none; color: white;" box-shadow="none">Yes</a></button>
