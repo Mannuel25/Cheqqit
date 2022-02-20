@@ -9,7 +9,6 @@ def signupPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
-        form = CustomUserCreationForm()
         if request.method == 'POST':
             form = CustomUserCreationForm(request.POST)
             if form.is_valid():
