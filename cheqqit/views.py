@@ -9,6 +9,7 @@ def signupPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
+        form = CustomUserCreationForm()
         if request.method == 'POST':
             form = CustomUserCreationForm(request.POST)
             if form.is_valid():
@@ -27,11 +28,13 @@ def signinPage(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                return redirect('tasks')
                 return redirect('inbox')
             else:
                 messages.error(request, "Invalid username or password")
         context = {}
         return render(request, 'registration/login.html', context)
+
 
 def signoutUser(request):
     logout(request)
