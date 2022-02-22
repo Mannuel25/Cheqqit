@@ -67,19 +67,63 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             context['tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
-        return context
-class CreateTaskView(LoginRequiredMixin, CreateView):
+        return context    
+
+class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
+    model = UserTasks
     form_class = TaskDetailsForm
     template_name = 'create_task.html'
+    success_url = reverse_lazy('inbox') 
+    context_object_name = 'tasks'
     success_url = reverse_lazy('inbox')
-    login_url = 'login'
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-        
 
-@login_required(login_url='login')
-def UpdateTask(request, slug):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
+        # all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+        try: 
+            # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
+            # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
+            join_done_tasks = ''.join(i for i in done_tasks[-1])
+        except: 
+            # print('error occured')
+            # print('LENGTH OF UNDONE TASKS IS:',len(done_tasks))
+            pass
+        else: 
+            # print('NO ERROR!!')
+            # print(F' n\n\nALL UNDOE TASKS: {done_tasks[-1]}')
+            join_done_task = ''.join(i for i in done_tasks[-1])
+            # print('UNDONE TASKS:',join_done_task)
+            
+            # print('USERTASKS:',UserTasks.objects.all())
+            UserTasks.objects.filter(title=join_done_task).delete()
+            context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
+        done_tasks.clear()
+        # print('undone tasks length:', len(done_tasks))
+        # print('\n\nall incomplete tasks:', all_incomplete)
+    
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(
+                title__contains=search_input)
+        context['search_input'] = search_input
+        return context
+
+class UpdateTaskView(LoginRequiredMixin, CreateView, ListView):
+    model = UserTasks
+    form_class = TaskDetailsForm
+    template_name = 'update_task.html'
+    success_url = reverse_lazy('inbox') 
+    context_object_name = 'tasks'
+    success_url = reverse_lazy('inbox')
+
+    def UpdateTask(request, slug):
         user_task = get_object_or_404(UserTasks, slug=slug)
         form = TaskDetailsForm(instance=user_task)
         if request.method == 'POST':
@@ -89,6 +133,53 @@ def UpdateTask(request, slug):
                 return redirect('inbox')
         context = {'form':form, 'slug':slug}
         return render(request, 'update_task.html', context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
+        # all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+        try: 
+            # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
+            # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
+            join_done_tasks = ''.join(i for i in done_tasks[-1])
+        except: 
+            # print('error occured')
+            # print('LENGTH OF UNDONE TASKS IS:',len(done_tasks))
+            pass
+        else: 
+            # print('NO ERROR!!')
+            # print(F' n\n\nALL UNDOE TASKS: {done_tasks[-1]}')
+            join_done_task = ''.join(i for i in done_tasks[-1])
+            # print('UNDONE TASKS:',join_done_task)
+            
+            # print('USERTASKS:',UserTasks.objects.all())
+            UserTasks.objects.filter(title=join_done_task).delete()
+            context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
+        done_tasks.clear()
+        # print('undone tasks length:', len(done_tasks))
+        # print('\n\nall incomplete tasks:', all_incomplete)
+    
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['tasks'] = context['tasks'].filter(
+                title__contains=search_input)
+        context['search_input'] = search_input
+        return context
+
+
+# @login_required(login_url='login')
+# def UpdateTask(request, slug):
+#         user_task = get_object_or_404(UserTasks, slug=slug)
+#         form = TaskDetailsForm(instance=user_task)
+#         if request.method == 'POST':
+#             form = TaskDetailsForm(request.POST, instance=user_task)
+#             if form.is_valid():
+#                 form.save()
+#                 return redirect('inbox')
+#         context = {'form':form, 'slug':slug}
+#         return render(request, 'update_task.html', context)
 
 
 @login_required(login_url='login')
