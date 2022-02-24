@@ -6,23 +6,17 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm
 
 def signupPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        form = CustomUserCreationForm()
-        if request.method == 'POST':
-            form = CustomUserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('login')
-        context = {'form': form}
-        return render(request, 'signup.html', context)
+    form = CustomUserCreationForm()
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    context = {'form': form}
+    return render(request, 'signup.html', context)
 
 def signinPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
+    if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = authenticate(request, username=username, password=password)
@@ -31,8 +25,8 @@ def signinPage(request):
                 return redirect('inbox')
             else:
                 messages.error(request, "Invalid username or password")
-        context = {}
-        return render(request, 'registration/login.html', context)
+    context = {}
+    return render(request, 'registration/login.html', context)
 
 
 def signoutUser(request):
