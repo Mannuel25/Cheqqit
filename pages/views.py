@@ -68,18 +68,37 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 title__contains=search_input)
         context['search_input'] = search_input
         return context    
-
 class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = TaskDetailsForm
     template_name = 'create_task.html'
     success_url = reverse_lazy('inbox') 
     context_object_name = 'tasks'
-    success_url = reverse_lazy('inbox')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['no_of_done_tasks'] = context['tasks'].filter(completed_task=False).count()
+        
+        return context
+
+class TaskDetailView(LoginRequiredMixin, ListView):
+    model = UserTasks
+    form_class = TaskDetailsForm
+    template_name = 'task_detail.html'
+    success_url = reverse_lazy('inbox') 
+    context_object_name = 'tasks'
+
+    def TaskDetail(request, slug):
+        user_task = get_object_or_404(UserTasks, slug=slug)
+        task_title = UserTasks.objects.get(slug=slug)
+        form = ViewTaskDetailsForm(instance=user_task)
+        context = {'form':form, 'slug':slug, 'task_title':task_title}
+        return render(request, 'task_detail.html', context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -115,7 +134,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
         context['search_input'] = search_input
         return context
 
-class UpdateTaskView(LoginRequiredMixin, CreateView, ListView):
+class UpdateTaskView(LoginRequiredMixin, ListView):
     model = UserTasks
     form_class = TaskDetailsForm
     template_name = 'update_task.html'
