@@ -337,7 +337,7 @@
                     value="{{ task }}" style="width: 16.5px; height: 16px; vertical-align: middle;">
                 <label for="task"><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black;">{{task|capfirst}}</a></label><br>
                 {% if task.description != '' and task.task_due_time != None and task.task_due_date != None %}
-                <div style="margin-left: 22px; color: lightslategrey;">{{ task.description }}</div>
+                <div style="margin-left: 22px; color: lightslategrey;">{{ task.description|truncatewords:10 }}</div>
                 <div style="margin-left: 22px;"><i class='bx bx-calendar' style="font-size: 14.5px;"> {{task.task_due_date}}</i>  ||  <i class='bx bx-time' style="font-size: 14.5px;"> {{task.task_due_time}}</i></div>
                 {% elif task.description != '' and task.task_due_time == None and task.task_due_date == None %}
                 <div style="margin-left: 22px; color: lightslategrey;">{{ task.description }}</div>
