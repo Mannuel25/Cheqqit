@@ -61,13 +61,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
 
         done_tasks.clear()
-        print('NO OF DONE TASK:', context)
-        a = context['no_of_undone_tasks']
-        lst_undone_task.append(a)
-        print('NO OF DONE TASK:', context['no_of_undone_tasks'])
-        # print('undone tasks length:', len(done_tasks))
-        # print('\n\nall incomplete tasks:', all_incomplete)
-        print('\n\n\nTT----:',lst_undone_task)
+        lst_undone_task.append(context['no_of_undone_tasks'])
+        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
