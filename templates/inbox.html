@@ -329,6 +329,12 @@
     {% include 'sidebar.html' %}
     <section class="home-section" style="background-color: white;">
         <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
+        {% for message in messages %}
+        <div class="alert alert-success" id='alert_msg' style="width: 25%; margin-left: 815px;">
+            <button type="button" class="close" data-dismiss="alert" style="outline: none;">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
         <div style="margin-left: 34px;">
             <form id="form" method="post" action="">
                 {% csrf_token %}
@@ -358,8 +364,16 @@
                 <hr>
                 {% endfor %}
             </form>
+            
     </section>
 
+    <script>
+        setTimeout(function () {
+            if ($('#alert_msg').length > 0) {
+                $('#alert_msg').remove();
+            }
+        }, 7000)
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
