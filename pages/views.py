@@ -9,6 +9,8 @@ from .models import UserTasks
 from .forms import TaskDetailsForm, ViewTaskDetailsForm, AllTasksForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+
 class HomePageView(TemplateView):
     template_name = 'home.html'
 class FeaturesPageView(TemplateView):
@@ -32,6 +34,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
+                print('done tasks:', done_tasks)
+                messages.success(self.request, f'{i} completed')
             if form.is_valid():
                 form.save() 
                 return redirect('inbox')
@@ -44,7 +48,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         # all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
         try: 
             # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
-            print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
+            # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
             join_done_task = ''.join(i for i in done_tasks[-1])
         except: 
             # print('error occured')
