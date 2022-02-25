@@ -130,7 +130,7 @@ def UpdateTask(request, slug):
             if form.is_valid():
                 form.save()
                 return redirect('inbox')
-        context = {'form':form, 'slug':slug, 'no_of_undone_tasks':lst_undone_task[:-1]}
+        context = {'form':form, 'slug':slug, 'no_of_undone_tasks':lst_undone_task[-1]}
         return render(request, 'update_task.html', context)
 
 @login_required(login_url='login')
