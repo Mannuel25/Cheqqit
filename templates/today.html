@@ -341,7 +341,7 @@
         <div style="margin-left: 34px;">
             <form id="form" method="post" action="">
                 {% csrf_token %}
-                {% for task in tasks %}
+                {% for task in your_today_tasks %}
                 <input type="checkbox" onchange="$('#form').submit();" name="checkbox" value="{{ task }}"
                     style="width: 16.5px; height: 16px; vertical-align: middle;">
                 <label for="task"><a href="{% url 'task_detail' task.slug %}"
