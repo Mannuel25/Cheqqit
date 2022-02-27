@@ -21,6 +21,7 @@ class WebappPageView(TemplateView):
 done_tasks, lst_undone_task = [], []
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
+remove_none = []
 class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
@@ -34,6 +35,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             form =  AllTasksForm(self.request.POST or None)
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
+                print('\n///',i)
                 done_tasks.append(i)
                 messages.success(self.request, f'{i} completed')
             if form.is_valid():
@@ -46,6 +48,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         # all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+        # print('\n\n --- INCOMPLETE TASKS 1x:',all_incomplete)
         try: 
             # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
             # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
@@ -63,6 +66,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             # print('USERTASKS:',UserTasks.objects.all())
             UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+            all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
+            print('\n\n --- INCOMPLETE TASKS 2:',all_incomplete)
         done_tasks.clear()
         lst_undone_task.append(context['no_of_undone_tasks'])
         for i in context['tasks']:
@@ -75,7 +80,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 a.append(i)
         print('\n\nA:', a)
         print('\n\ndates:',tasks_due_dates)
-        remove_none = []
         format_today_date = datetime.today().strftime('%Y-%m-%d')
 
         for i in a:
@@ -88,8 +92,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                     print(j == format_today_date)
                     if i not in today_tasks:
                         today_tasks.append(i)
-
-        # print('\n\n--------CONTEXT: ',context)    
+           
         print('\n\n++TODAY YASKS:', today_tasks)
             
         search_input = self.request.GET.get('search-area') or ''
@@ -174,7 +177,7 @@ def DeleteTask(request, slug):
 
 class TodayView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
-    form_class = TaskDetailsForm
+    form_class = AllTasksForm
     template_name = 'today.html'
     success_url = reverse_lazy('inbox') 
     context_object_name = 'tasks'
@@ -182,8 +185,15 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
     print('TODAY DATE:', format_today_date)
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+        if self.request.method == 'POST':
+            form =  AllTasksForm(self.request.POST or None)
+            list_ = self.request.POST.getlist('checkbox')
+            for i in list_:
+                done_tasks.append(i)
+                messages.success(self.request, f'{i} completed')
+            if form.is_valid():
+                form.save() 
+                return redirect('today')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -194,6 +204,7 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
 
         context['today_date'] = today_date
         context['your_today_tasks'] = today_tasks
+        
         try: 
             # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
             # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
@@ -207,14 +218,14 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             # print(F' n\n\nALL UNDOE TASKS: {done_tasks[-1]}')
             join_done_task = ''.join(i for i in done_tasks[-1])
             # print('UNDONE TASKS:',join_done_task)
-            
+           
             UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             # lst_done_task.append(i for i i)
         done_tasks.clear()
         # print('undone tasks length:', len(done_tasks))
         # print('\n\nall incomplete tasks:', all_incomplete)
-
+        not_done_tasks = []
         print('\n\nCONTEXT:',context)
 
         search_input = self.request.GET.get('search-area') or ''
