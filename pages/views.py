@@ -76,14 +76,16 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         print('\n\nA:', a)
         print('\n\ndates:',tasks_due_dates)
         remove_none = []
+        format_today_date = datetime.today().strftime('%Y-%m-%d')
+
         for i in a:
             if i != 'None':
                 remove_none.append(i)   
         print('remove none:', remove_none)
         for i in context['tasks']:
             for j in remove_none:
-                # g = datetime.strptime(j,date_format)
-                if str(i.task_due_date) == j:
+                if str(i.task_due_date) == j and j == format_today_date:
+                    print(j == format_today_date)
                     if i not in today_tasks:
                         today_tasks.append(i)
 
@@ -96,7 +98,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 title__contains=search_input)
         context['search_input'] = search_input
         return context
-
 
 class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
