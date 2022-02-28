@@ -35,7 +35,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             form =  AllTasksForm(self.request.POST or None)
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
-                print('\n///',i)
                 done_tasks.append(i)
                 messages.success(self.request, f'{i} completed')
             if form.is_valid():
@@ -78,14 +77,11 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         for i in list(set(tasks_due_dates)):
             if i != None:
                 a.append(i)
-        print('\n\nA:', a)
-        print('\n\ndates:',tasks_due_dates)
         format_today_date = datetime.today().strftime('%Y-%m-%d')
 
         for i in a:
             if i != 'None':
                 remove_none.append(i)   
-        print('remove none:', remove_none)
         for i in context['tasks']:
             for j in remove_none:
                 if str(i.task_due_date) == j and j == format_today_date:
@@ -93,7 +89,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                     if i not in today_tasks:
                         today_tasks.append(i)
            
-        print('\n\n++TODAY YASKS:', today_tasks)
             
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
