@@ -21,7 +21,7 @@ class WebappPageView(TemplateView):
 done_tasks, lst_undone_task = [], []
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
-remove_none = []
+remove_none, selected_task = [], []
 class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
@@ -55,7 +55,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
-                    print('\n\n +++', i, join_done_task == str(i))
                     today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
         for i in context['tasks']:
@@ -75,10 +74,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if str(i.task_due_date) == j and j == format_today_date:
                     if i not in today_tasks:
                         today_tasks.append(i)
-        
         done_tasks.clear()
-        print('--Context:', context)
-        print('--Today tasks:', today_tasks)
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -87,7 +83,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         context['search_input'] = search_input
         return context
 
-selected_task = []
 class TodayView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
@@ -120,10 +115,8 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             pass
         else: 
             join_done_task = ''.join(i for i in selected_task[-1])
-            print('join:',join_done_task)
             for i in context['your_today_tasks']:
                 if join_done_task == str(i):
-                    print('\n\n---', i, join_done_task == str(i))
                     context['your_today_tasks'].remove(i)
             UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
@@ -154,7 +147,6 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         
         try: 
-           
             join_done_task = ''.join(i for i in done_tasks[-1])
         except: 
             pass
