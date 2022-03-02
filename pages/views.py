@@ -53,7 +53,10 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             join_done_task = ''.join(i for i in done_tasks[-1])
             UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        done_tasks.clear()
+            for i in today_tasks:
+                if join_done_task == str(i):
+                    print('\n\n +++', i, join_done_task == str(i))
+                    today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
         for i in context['tasks']:
             tasks_due_dates.append(str(i.task_due_date))
@@ -72,6 +75,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if str(i.task_due_date) == j and j == format_today_date:
                     if i not in today_tasks:
                         today_tasks.append(i)
+        
+        done_tasks.clear()
         print('--Context:', context)
         print('--Today tasks:', today_tasks)
 
