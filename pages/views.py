@@ -170,8 +170,6 @@ def DeleteTask(request, slug):
     user_tasks.delete()
     return redirect('inbox')
 
-get_selected_task = []
-
 class TodayView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
@@ -179,7 +177,6 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
     success_url = reverse_lazy('inbox') 
     context_object_name = 'tasks'
     format_today_date = datetime.today().strftime('%Y-%m-%d')
-    print('TODAY DATE:', format_today_date)
 
     def form_valid(self, form):
         if self.request.method == 'POST':
@@ -187,7 +184,6 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
-                get_selected_task.append(i)
                 messages.success(self.request, f'{i} completed')
             if form.is_valid():
                 form.save() 
@@ -195,54 +191,28 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # all_tasks = [i for i in context['tasks'].filter(user = self.request.user)]
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        # all_incomplete = [i for i in context['tasks'].filter(user=self.request.user, completed_task=False)]
-
         context['today_date'] = today_date
         context['your_today_tasks'] = today_tasks
-        print('\n\n -----+++--- Today task:', context['your_today_tasks'])
         
         try: 
-            # print(F' \n\n\nUNDOnE TASK: {done_tasks[-1]}')
-            # print(F' \n\n\nALL UNDONE TASK: {done_tasks}')
             join_done_task = ''.join(i for i in done_tasks[-1])
             context['your_today_tasks'].pop(get_selected_task.index(get_selected_task[-1]))
         except: 
-            # print('error occured')
-            # print('LENGTH OF UNDONE TASKS IS:',len(done_tasks))
             pass
         else: 
-            # print('NO ERROR!!')
-            # print(F' n\n\nALL UNDOE TASKS: {done_tasks[-1]}')
             join_done_task = ''.join(i for i in done_tasks[-1])
-            # print('UNDONE TASKS:',join_done_task)
-            # context.pop('your_today_tasks')
             UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-            # for i in context['your_today_tasks']:
-            #     if str(i) == get_selected_task[-1]:
-            #         print('\n\n- ---- yeah it is', i, str(i))
-            #         context['your_today_tasks'].remove(get_selected_task[-1])    
-            for i in context['your_today_tasks']:
-                if str(get_selected_task[-1]) in context['your_today_tasks']:
-                    print('\n ++ yeh!')
-                    context['your_today_tasks'].remove(get_selected_task[-1])
-
         done_tasks.clear()
-        # print('undone tasks length:', len(done_tasks))
-        # print('\n\nall incomplete tasks:', all_incomplete)
-        print('get selected task:', get_selected_task)
-        print('\n\nCONTEXT in TODAY:',context)
-        print('\n\n )))) Today task:', context['your_today_tasks'])
+        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
         return context
-
 
 def page_not_found(request, exception):
     return render(request, '404.html')
