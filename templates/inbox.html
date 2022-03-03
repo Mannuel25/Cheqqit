@@ -8,15 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} Inbox - Cheqqit {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="{% static 'main.css' %}"> -->
     <script src="https://kit.fontawesome.com/109fe23f15.js" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
     <link rel="manifest" href="/static/favicons/site.webmanifest">
-    <style>
+    <!-- <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
         * {
@@ -322,13 +322,13 @@
             margin-left: auto;
             margin-right: auto;
         }
-    </style>
+    </style> -->
 </head>
 
 <body>
     {% include 'sidebar.html' %}
     <section class="home-section" style="background-color: white;">
-        <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
+        <div class="text" style="margin-left: 34px; font-weight:bold;"><legend>Inbox</legend></div>
         {% for message in messages %}
         <div class="alert alert-success" id='alert_msg' style="width: 40%; margin-left: 605px;">
             <button type="button" class="close" data-dismiss="alert" style="outline: none;">&times;</button>
