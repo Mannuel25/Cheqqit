@@ -266,3 +266,37 @@ margin: 18px
   margin-left: auto;
   margin-right: auto;
 }
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    height: 256px;
+}
+.back-btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    background-color: transparent;
+    border: 2px solid blueviolet;
+    border-radius: 6px;
+    font-size: 22px;
+}
+.text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;   
+}
+
+.btn-danger {
+    float: right;
+    margin: 12px;
+}
+
+.btn-success {
+float: left;
+margin: 12px;
+}
