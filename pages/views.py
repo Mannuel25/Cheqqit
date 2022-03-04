@@ -22,6 +22,7 @@ done_tasks, lst_undone_task = [], []
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
 remove_none, selected_task = [], []
+completed_task, all_completed_tasks = [], []  
 class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
@@ -36,6 +37,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
+                completed_task.append(i)
                 messages.success(self.request, f'{i} completed')
             if form.is_valid():
                 form.save() 
@@ -44,18 +46,40 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['all_user_tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+        all_user_tasks = {}
+        task_info = []
+        for i, j in context.items():
+            # print(i, j)
+            all_user_tasks[i] = j
+        print('\n + all user tasks:', all_user_tasks, '\n\n')
+        
         try: 
             join_done_task = ''.join(i for i in done_tasks[-1])
         except: 
             pass
         else: 
             join_done_task = ''.join(i for i in done_tasks[-1])
-            UserTasks.objects.filter(title=join_done_task).delete()
+            # UserTasks.objects.filter(title=join_done_task).delete()
+            context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-            for i in today_tasks:
-                if join_done_task == str(i):
-                    today_tasks.remove(i)
+        for i in all_user_tasks['all_user_tasks']:
+            for j in completed_task:
+                if j != str(i):
+                    print('yehah!\n')
+                    print(i, type(i), j, type(j))
+                else: 
+                    print('mmmm')
+                    # print(i, j)
+
+            #     if str(i) == j:
+            #         print('YEah!!', i, j)
+            # print(i, type(i))
+
+        for i in today_tasks:
+            if join_done_task == str(i):
+                today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
         for i in context['tasks']:
             tasks_due_dates.append(str(i.task_due_date))
@@ -75,6 +99,13 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                     if i not in today_tasks:
                         today_tasks.append(i)
         done_tasks.clear()
+
+        # print('\n\n\ +++++ CONTEXT 1:', context)
+        
+        # for i in completed_task:
+        #     print('\n\n--',i)
+        print('complete:', completed_task)
+        # print('\n\n __+++ ALL:', all_completed_tasks)
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -97,12 +128,14 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 selected_task.append(i)
+                completed_task.append(i)
                 messages.success(self.request, f'{i} completed')
             if form.is_valid():
                 form.save() 
                 return redirect('today')
 
     def get_context_data(self, **kwargs):
+        print('COMPLETED TASKS:', completed_task)
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
@@ -120,8 +153,17 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
                     context['your_today_tasks'].remove(i)
             UserTasks.objects.filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+            # print('CONTEXT:', context)
         done_tasks.clear()
         
+        for j in context['tasks']:
+            for i in completed_task:
+                if i == str(j):
+                    print('\n===', i, j)
+                    print('\n===', str(i) in context['tasks'])
+                    all_completed_tasks.append(j)
+        
+        print('\n\n __+++ ALL:', all_completed_tasks)
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
