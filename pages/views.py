@@ -55,14 +55,12 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             join_done_task = ''.join(i for i in done_tasks[-1])
             for i in context['object_list']:
                 if str(i) == join_done_task:
-                    print(i, i.task_due_date, i.task_due_time)
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
                     today_tasks.remove(i)
-        print('All completed:', all_completed_tasks)
         lst_undone_task.append(context['no_of_undone_tasks'])
         for i in context['tasks']:
             tasks_due_dates.append(str(i.task_due_date))
@@ -81,7 +79,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if str(i.task_due_date) == j and j == format_today_date:
                     if i not in today_tasks:
                         today_tasks.append(i)
-        done_tasks.clear()
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -122,13 +119,14 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             pass
         else: 
             join_done_task = ''.join(i for i in selected_task[-1])
-            for i in context['your_today_tasks']:
-                if join_done_task == str(i):
-                    context['your_today_tasks'].remove(i)
+            for i in context['object_list']:
+                if str(i) == join_done_task:
+                    all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-            # print('CONTEXT:', context)
-        done_tasks.clear()
+            for i in today_tasks:
+                if join_done_task == str(i):
+                    today_tasks.remove(i)
                 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -162,7 +160,6 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
             join_done_task = ''.join(i for i in done_tasks[-1])
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        done_tasks.clear()
     
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -202,8 +199,6 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             
-        done_tasks.clear()
-        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
