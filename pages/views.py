@@ -62,24 +62,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if join_done_task == str(i):
                     today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
-        for i in context['tasks']:
-            tasks_due_dates.append(str(i.task_due_date))
-        a= []
-        date_format = '%Y-%m-%d'
-        for i in list(set(tasks_due_dates)):
-            if i != None:
-                a.append(i)
-        format_today_date = datetime.today().strftime('%Y-%m-%d')
-
-        for i in a:
-            if i != 'None':
-                remove_none.append(i)   
-        for i in context['tasks']:
-            for j in remove_none:
-                if str(i.task_due_date) == j and j == format_today_date:
-                    if i not in today_tasks:
-                        today_tasks.append(i)
-
+          
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -94,7 +77,6 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
     success_url = reverse_lazy('today') 
     context_object_name = 'tasks'
     login_url = 'login'
-    format_today_date = datetime.today().strftime('%Y-%m-%d')
 
     def form_valid(self, form):
         if self.request.method == 'POST':
@@ -112,7 +94,7 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         context['today_date'] = today_date
-        context['your_today_tasks'] = today_tasks
+        format_today_date = datetime.today().strftime('%Y-%m-%d')
         
         try: 
             join_done_task = ''.join(i for i in selected_task[-1])
@@ -120,6 +102,7 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             pass
         else: 
             join_done_task = ''.join(i for i in selected_task[-1])
+
             for i in context['object_list']:
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
@@ -128,7 +111,19 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             for i in today_tasks:
                 if join_done_task == str(i):
                     today_tasks.remove(i)
-                
+        for i in context['tasks']:
+            if i.task_due_date != None:
+                tasks_due_dates.append(str(i.task_due_date))
+        
+        your_today_tasks = []
+
+        for i in context['tasks']:
+            for j in tasks_due_dates:
+                if str(i.task_due_date) == j and j == format_today_date:
+                    your_today_tasks.append(i)
+
+        context['your_today_tasks'] = set(your_today_tasks)
+
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
