@@ -302,12 +302,7 @@
         <div class="text" style="margin-left: 34px;">
             <legend>Completed Tasks</legend>
         </div>
-        {% for message in messages %}
-        <div class="alert alert-success" id='alert_msg' style="width: 40%; margin-left: 605px;">
-            <button type="button" class="close" data-dismiss="alert" style="outline: none;">&times;</button>
-            {{ message|truncatechars:30 }}
-        </div>
-        {% endfor %}
+        
         <div style="margin-left: 34px;">
             {% csrf_token %}
             {% for task in all_completed_tasks %}
@@ -346,13 +341,6 @@
 
     </section>
 
-    <script>
-        setTimeout(function () {
-            if ($('#alert_msg').length > 0) {
-                $('#alert_msg').remove();
-            }
-        }, 7000)
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
