@@ -172,16 +172,6 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
     context_object_name = 'tasks'
     login_url = 'login'
 
-    def form_valid(self, form):
-        if self.request.method == 'POST':
-            form =  AllTasksForm(self.request.POST or None)
-            list_ = self.request.POST.getlist('checkbox')
-            # for i in list_:
-            #     selected_task.append(i)
-            if form.is_valid():
-                form.save() 
-                return redirect('completed_tasks')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
@@ -202,6 +192,10 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
                 title__contains=search_input)
         context['search_input'] = search_input
         return context
+
+class LabelsView(LoginRequiredMixin, TemplateView):
+    template_name = 'labels.html'
+    login_url = 'login'
 
 @login_required(login_url='login')
 def UpdateTask(request, slug):
