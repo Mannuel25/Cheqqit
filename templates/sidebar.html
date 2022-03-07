@@ -5,7 +5,9 @@
     <ul class="nav-list">
         <li>
             <i class='bx bx-search'></i>
-            <input type="text" placeholder="Search...">
+            <form method="GET" style="display: flex;">
+                <input type='text' name='search-area' placeholder="Search for a task..." value="{{search_input}}">
+            </form>
             <span class="tooltip">Search</span>
         </li>
         <li>
