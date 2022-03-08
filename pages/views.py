@@ -15,8 +15,7 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
 class FeaturesPageView(TemplateView):
     template_name = 'features.html'
-class WebappPageView(TemplateView):
-    template_name = 'webapp.html'
+
 
 done_tasks, lst_undone_task = [], []
 today_date = datetime.today().strftime('%a %b %d, %Y')
