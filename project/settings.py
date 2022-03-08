@@ -23,7 +23,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cheqqit.herokuapp.com']
+ALLOWED_HOSTS = ['cheqqit.herokuapp.com', '127.0.0.1', 'localhost']
 
 AUTH_USER_MODEL = 'cheqqit.CustomUser'
 
