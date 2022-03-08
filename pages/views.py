@@ -188,7 +188,7 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
             
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
-            context['tasks'] = context['tasks'].filter(
+            context['all_completed_tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
         return context
