@@ -77,8 +77,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cheqqitDB',
-        'USER': config('USER'),
-        'PASSWORD': config('PASSWORD'),
+        'USER': 'postgres',
+        'PASSWORD': 'prop2592',
         'HOST': 'localhost',
         'PORT': '5432',
     }
