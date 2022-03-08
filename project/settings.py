@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'cheqqitDB',
         'USER': 'postgres',
         'PASSWORD': 'prop2592',
-        'HOST': 'ec2-18-213-219-169.compute-1.amazonaws.com',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
