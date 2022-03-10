@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'CheqqitDB',
         'USER': config('USER'),
         'PASSWORD': config('PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
