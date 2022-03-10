@@ -4,6 +4,7 @@ from .views import FeaturesPageView
 from .views import InboxView
 from .views import CreateTaskView, UpdateTask, TaskDetail, DeleteTask,TodayView, CompletedTasksView, LabelsView
 
+
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('features/', FeaturesPageView.as_view(), name='features'),
@@ -17,5 +18,5 @@ urlpatterns = [
     path('today/', TodayView.as_view(), name='today'),
 ]
 
-handler404 = 'pages.views.page_not_found'
-handler500 = 'pages.views.server_error'
+# handler404 = 'pages.views.page_not_found'
+# handler500 = 'pages.views.server_error'
