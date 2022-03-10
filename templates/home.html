@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <br>
@@ -14,7 +15,7 @@
             <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get Started</a>
           </p>
       </div>
-      <img class="img-fluid w-50 d-none d-sm-block" src="/static/img/homepage_image.JPG"/>
+      <img class="img-fluid w-50 d-none d-sm-block" src="{% static 'images/homepage_image.JPG' %}"/>
     </div>
   </div>
 </section>

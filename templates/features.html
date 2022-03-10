@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Features - Cheqqit{% endblock title %}
 
@@ -9,7 +10,7 @@
       <div>
         <h1>Organize every aspect of your life</h1>
       </div>
-      <img class="img-fluid w-50 d-none d-sm-block" src="/static/img/organize_image.svg" />
+      <img class="img-fluid w-50 d-none d-sm-block" src="{% static 'images/organize_image.svg' %}"/>
     </div>
   </div>
 </section>
