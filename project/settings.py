@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 from decouple import config
 import django_heroku
-import dj_databasse_url
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +32,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['cheqqit.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -138,7 +138,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = [os.path.join(BASE_DIR, 'staticfiles')]
 STATICFILES_DIRS= [os.path.join(BASE_DIR, 'static')]
-django_heroku.setting(locals())
+django_heroku.settings(locals())
 # Extra places for collectstatic to find static files.
 
 
