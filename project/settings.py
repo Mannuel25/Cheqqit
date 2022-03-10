@@ -13,10 +13,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+import django_heroku
+import dj_databasse_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 AUTH_USER_MODEL = 'cheqqit.CustomUser'
 
@@ -32,7 +34,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['cheqqit.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -134,8 +136,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+STATIC_ROOT = [os.path.join(BASE_DIR, 'staticfiles')]
 STATICFILES_DIRS= [os.path.join(BASE_DIR, 'static')]
-
+django_heroku.setting(locals())
 # Extra places for collectstatic to find static files.
 
 

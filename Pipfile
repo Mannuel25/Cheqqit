@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "==3.2.6"
+gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 

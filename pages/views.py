@@ -17,12 +17,12 @@ class HomePageView(TemplateView):
 class FeaturesPageView(TemplateView):
     template_name = 'features.html'
 
-
 done_tasks, lst_undone_task = [], []
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
 remove_none, selected_task = [], []
 all_completed_tasks = []
+
 class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
