@@ -7,6 +7,8 @@ name = "pypi"
 django = "==3.2.6"
 gunicorn = "*"
 django-heroku = "*"
+python-decouple = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 
