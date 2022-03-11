@@ -32,7 +32,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['cheqqit.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -88,10 +88,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'CheqqitDB',
+        'NAME': 'someDB',
         'USER': config('USER'),
         'PASSWORD': config('PASSWORD'),
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
