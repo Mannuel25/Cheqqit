@@ -37,7 +37,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
-                # messages.success(self.request, f'{i} completed') 
+                messages.success(self.request, f'{i} completed') 
             return redirect('inbox')
 
     def get_context_data(self, **kwargs):
@@ -55,7 +55,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
-            messages.success(self.request, f'{join_done_task} completed') 
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
@@ -84,7 +83,7 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 selected_task.append(i)
-                # messages.success(self.request, f'{i} completed')
+                messages.success(self.request, f'{i} completed')
             return redirect('today')
 
     def get_context_data(self, **kwargs):
@@ -105,7 +104,6 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
-            messages.success(self.request, f'{join_done_task} completed') 
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
