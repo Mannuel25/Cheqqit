@@ -54,7 +54,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         else: 
             join_done_task = ''.join(i for i in done_tasks[-1])
             for i in context['object_list']:
-                if str(i) == join_done_task and str(i) not in all_completed_tasks:
+                if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
@@ -62,7 +62,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if join_done_task == str(i):
                     today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
-        
+          
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -102,8 +102,9 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             pass
         else: 
             join_done_task = ''.join(i for i in selected_task[-1])
+
             for i in context['object_list']:
-                if str(i) == join_done_task and str(i) not in all_completed_tasks:
+                if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
@@ -122,17 +123,11 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
                     your_today_tasks.append(i)
 
         context['your_today_tasks'] = set(your_today_tasks)
-        b = [i for i in context['your_today_tasks']]
+
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['your_today_tasks'] = context['tasks'].filter(
                 title__contains=search_input)
-            c = [i for i in context['your_today_tasks']]
-            for i in c:
-                if i not in b:
-                    c.remove(i)
-            context['your_today_tasks'] = c
-
         context['search_input'] = search_input
         return context
 
@@ -169,7 +164,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
         context['search_input'] = search_input
         return context
 
-class CompletedTasksView(LoginRequiredMixin, ListView):
+class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
     form_class = AllTasksForm
     template_name = 'completed_tasks.html'
@@ -180,22 +175,23 @@ class CompletedTasksView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
-        context['all_completed_tasks'] = all_completed_tasks        
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        
-        b = [i for i in context['all_completed_tasks']]
-        c= []
-        search_input = self.request.GET.get('search-area') or ''
-        if search_input:
-            for i in b:
-                if search_input in str(i):
-                    c.append(i)
+        context['all_completed_tasks'] = all_completed_tasks        
+        try: 
+            join_done_task = ''.join(i for i in selected_task[-1])
+        except: 
+            pass
+        else: 
+            join_done_task = ''.join(i for i in selected_task[-1])
+            context['tasks'].filter(title=join_done_task).delete()
+            context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             
-            context['all_completed_tasks'] = c
-
+        search_input = self.request.GET.get('search-box') or ''
+        if search_input:
+            context['all_completed_tasks'] = context['tasks'].filter(
+                title__contains=search_input)
         context['search_input'] = search_input
         return context
-
 
 class LabelsView(LoginRequiredMixin, TemplateView):
     template_name = 'labels.html'
