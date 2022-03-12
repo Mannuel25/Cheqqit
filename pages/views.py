@@ -37,10 +37,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
-                messages.success(self.request, f'{i} completed')
-            if form.is_valid():
-                form.save() 
-                return redirect('inbox')
+                messages.success(self.request, f'{i} completed') 
+            return redirect('inbox')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -62,7 +60,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if join_done_task == str(i):
                     today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
-          
+        context['all_completed_tasks'] = set(all_completed_tasks)     
+        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -85,9 +84,7 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
             for i in list_:
                 selected_task.append(i)
                 messages.success(self.request, f'{i} completed')
-            if form.is_valid():
-                form.save() 
-                return redirect('today')
+            return redirect('today')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,6 +113,7 @@ class TodayView(LoginRequiredMixin, CreateView, ListView):
                 tasks_due_dates.append(str(i.task_due_date))
         
         your_today_tasks = []
+        context['all_completed_tasks'] = set(all_completed_tasks)     
 
         for i in context['tasks']:
             for j in tasks_due_dates:
@@ -156,7 +154,9 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
             join_done_task = ''.join(i for i in done_tasks[-1])
             context['tasks'].filter(title=join_done_task).delete()
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-    
+
+        context['all_completed_tasks'] = set(all_completed_tasks)     
+
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -176,7 +176,7 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        context['all_completed_tasks'] = all_completed_tasks        
+        context['all_completed_tasks'] = set(all_completed_tasks)     
         try: 
             join_done_task = ''.join(i for i in selected_task[-1])
         except: 
