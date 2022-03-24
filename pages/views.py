@@ -44,7 +44,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        print('context:', context['object_list'])
         
         try: 
             join_done_task = ''.join(i for i in done_tasks[-1])
@@ -52,9 +51,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             pass
         else: 
             join_done_task = ''.join(i for i in done_tasks[-1])
-            for i in context['object_list'].filter(user=self.request.user): 
-                # print(join_done_task == str(i), i, self.request.user)
-                # all_completed_tasks.append(i)
+            for i in context['object_list']:
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
@@ -63,10 +60,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if join_done_task == str(i):
                     today_tasks.remove(i)
         lst_undone_task.append(context['no_of_undone_tasks'])
-        # print('all:', all_completed_tasks)
         context['all_completed_tasks'] = set(all_completed_tasks)     
-        # for i in context['object_list'].filter(user=self.request.user):
-        #     print(i, self.request.user)
+        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -181,26 +176,15 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        context['all_completed_tasks'] = set(all_completed_tasks)
-        # g = []
-        # for j in context['object_list'].filter(user=self.request.user):
-        #     for i in context['all_completed_tasks']:
-        #         print(type(i), type(j))
-        #     print(j)
-
-        # user_completed_tasks = [] 
-        # for i in context['object_list'].filter(user=self.request.user):
-        #     for i in list(set(all_completed_tasks)):
-
-        # print('all complted:', all_completed_tasks)
+        context['all_completed_tasks'] = set(all_completed_tasks)     
         try: 
             join_done_task = ''.join(i for i in selected_task[-1])
         except: 
             pass
         else: 
             join_done_task = ''.join(i for i in selected_task[-1])
-        context['tasks'].filter(title=join_done_task).delete()
-        context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+            context['tasks'].filter(title=join_done_task).delete()
+            context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
