@@ -55,7 +55,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
-            messages.success(self.request, f'{join_done_task} completed') 
+            # messages.success(self.request, f'{join_done_task} completed') 
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
