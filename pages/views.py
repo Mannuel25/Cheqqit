@@ -36,10 +36,9 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         if self.request.method == 'POST':
             form =  AllTasksForm(self.request.POST or None)
             list_ = self.request.POST.getlist('checkbox')
+            messages.success(self.request, f'{list_[0]} completed') 
             for i in list_:
                 done_tasks.append(i)
-                if len(list_) > 0:
-                    messages.success(self.request, f'{i} completed') 
             return redirect('inbox')
 
     def get_context_data(self, **kwargs):
