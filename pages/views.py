@@ -22,6 +22,7 @@ today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
 remove_none, selected_task = [], []
 all_completed_tasks = []
+selected_task = ''
 
 class InboxView(LoginRequiredMixin, CreateView, ListView):
     model = UserTasks
@@ -37,7 +38,6 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
-                messages.success(self.request, f'{i} completed') 
             return redirect('inbox')
 
     def get_context_data(self, **kwargs):
@@ -55,6 +55,7 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
             context['tasks'].filter(title=join_done_task).delete()
+            messages.success(self.request, f'{join_done_task} completed') 
             context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
@@ -177,15 +178,15 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         context['all_completed_tasks'] = set(all_completed_tasks)     
-        try: 
-            join_done_task = ''.join(i for i in selected_task[-1])
-        except: 
-            pass
-        else: 
-            join_done_task = ''.join(i for i in selected_task[-1])
-            context['tasks'].filter(title=join_done_task).delete()
-            context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-            
+        # try: 
+        #     join_done_task = ''.join(i for i in selected_task[-1])
+        # except: 
+        #     pass
+        # else: 
+        #     join_done_task = ''.join(i for i in selected_task[-1])
+        #     context['tasks'].filter(title=join_done_task).delete()
+        #     context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+        #     print('all tasks:', context['tasks'])
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
             context['all_completed_tasks'] = context['tasks'].filter(
