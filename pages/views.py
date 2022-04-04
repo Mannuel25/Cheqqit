@@ -38,6 +38,8 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
             list_ = self.request.POST.getlist('checkbox')
             for i in list_:
                 done_tasks.append(i)
+            if len(list_) > 0:
+                messages.success(self.request, f'{join_done_task} completed') 
             return redirect('inbox')
 
     def get_context_data(self, **kwargs):
@@ -47,16 +49,16 @@ class InboxView(LoginRequiredMixin, CreateView, ListView):
         
         try: 
             join_done_task = ''.join(i for i in done_tasks[-1])
+            messages.success(self.request, f'{join_done_task} completed') 
         except: 
             pass
         else: 
             join_done_task = ''.join(i for i in done_tasks[-1])
+            context['tasks'].filter(title=join_done_task).delete()
+            context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in context['object_list']:
                 if str(i) == join_done_task:
                     all_completed_tasks.append(i)
-            context['tasks'].filter(title=join_done_task).delete()
-            # messages.success(self.request, f'{join_done_task} completed') 
-            context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
             for i in today_tasks:
                 if join_done_task == str(i):
                     today_tasks.remove(i)
