@@ -20,6 +20,7 @@ class FeaturesPageView(TemplateView):
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
 number_of_undone_tasks, all_completed_tasks = [], []
+get_task_title, task_completed = [], []
 
 class InboxView(LoginRequiredMixin, ListView):
     model = UserTasks
@@ -41,29 +42,23 @@ class InboxView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        
-        # try: 
-        #     join_done_task = ''.join(i for i in done_tasks[-1])
-        # except: 
-        #     pass
-        # else: 
-        #     join_done_task = ''.join(i for i in done_tasks[-1])
-        #     context['tasks'].filter(title=join_done_task).delete()
-        #     context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        #     for i in context['object_list']:
-        #         if str(i) == join_done_task:
-        #             all_completed_tasks.append(i)
-        #     for i in today_tasks:
-        #         if join_done_task == str(i):
-        #             today_tasks.remove(i)
         number_of_undone_tasks.append(context['no_of_undone_tasks'])
-        context['all_completed_tasks'] = set(all_completed_tasks)     
-        
+        # print('no_of undone tasks:', number_of_undone_tasks)
+        context['all_completed_tasks'] = set(all_completed_tasks) 
+        # print('\nget:', get_task_title)
+        if len(task_completed) > 0:
+            if task_completed[-1]:
+                selected_task = ' '.join(i for i in get_task_title)
+                # print(f'{selected_task} successfully completed!')
+                messages.success(self.request, f'{selected_task} successfully completed!')    
+
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
+        task_completed.clear()
+        get_task_title.clear()
         return context
 
 class TodayView(LoginRequiredMixin, ListView):
@@ -147,7 +142,7 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         context['all_completed_tasks'] = set(all_completed_tasks)     
-       
+
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
             context['all_completed_tasks'] = context['tasks'].filter(
@@ -163,11 +158,25 @@ class LabelsView(LoginRequiredMixin, TemplateView):
 def UpdateTask(request, slug):
     user_task = get_object_or_404(UserTasks, slug=slug)
     form = UpdateTaskForm(instance=user_task)
+    
     if request.method == 'POST':
         form = UpdateTaskForm(request.POST, instance=user_task)
         if form.is_valid():
+            complete = form.cleaned_data.get('completed_task')
+            task_completed.append(complete)
+            if complete:
+                # print('\n ++++ complete:', complete)
+                split_slug = [i for i in slug.split('-')]
+                for i in split_slug:
+                    while '-' in split_slug:
+                        split_slug.remove('-')
+                split_slug.pop()
+                for i in split_slug:
+                    get_task_title.append(i)
+                # print('\nget 22--:', get_task_title)
             form.save()
             return redirect('inbox')
+        
     context = {'form':form, 'slug':slug, 'no_of_undone_tasks':number_of_undone_tasks[-1]}
     return render(request, 'update_task.html', context)
 
