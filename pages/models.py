@@ -17,7 +17,6 @@ class UserTasks(models.Model):
     task_due_date = models.DateField(null=True, blank=True)
     task_due_time = models.TimeField(null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True)
-
     
     def __str__(self):
         return self.title
@@ -29,6 +28,5 @@ class UserTasks(models.Model):
         if not self.slug:
             self.slug = slugify(self.title + '-' + generate_random_slug())
         super(UserTasks, self).save(*args, **kwargs)
-    
     class Meta:
         order_with_respect_to = 'user'
