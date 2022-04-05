@@ -67,11 +67,3 @@ class TaskDetailsForm(forms.ModelForm):
     class Meta(forms.ModelForm):
         model = UserTasks
         fields = ('title', 'description','task_due_date','task_due_time',)
-
-
-class AllTasksForm(forms.ModelForm):
-    task_done = forms.BooleanField(required=False, initial=False)
-
-    class Meta(forms.ModelForm):
-        model = UserTasks
-        fields = ['task_done',]
