@@ -47,7 +47,7 @@ class InboxView(LoginRequiredMixin, ListView):
         context['all_completed_tasks'] = set(all_completed_tasks) 
         # print('\nget:', get_task_title)
         if len(task_completed) > 0:
-            if task_completed[-1]:
+            if task_completed[-1] == True:
                 selected_task = ' '.join(i for i in get_task_title)
                 # print(f'{selected_task} successfully completed!')
                 messages.success(self.request, f'{selected_task} successfully completed!')    
