@@ -6,11 +6,13 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from .models import UserTasks
-from .forms import AddTaskForm, TaskDetailsForm, UpdateTaskForm
+from .forms import AddTaskForm, TaskDetailsForm, UpdateTaskForm, TaskPositionForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from datetime import datetime 
+from django.views import View
+from django.db import transaction
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -200,3 +202,16 @@ def page_not_found(request, exception):
 
 def server_error(request, exception=None):
     return render(request, '500.html')
+
+
+class TaskReorder(View):
+    def postion(self, request):
+        form = TaskPositionForm(request.POST)
+
+        if form.is_valid():
+            positionList = form.cleaned_data["position"].split(',')
+
+            with transaction.atomic():
+                self.request.user.set_task_order(positionList)
+
+        return redirect(reverse_lazy('inbox'))
