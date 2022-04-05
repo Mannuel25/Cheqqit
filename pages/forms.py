@@ -18,7 +18,7 @@ class TaskDetailsForm(forms.ModelForm):
         label="Select the task's due time", required=False,
         widget=forms.widgets.TimeInput(attrs={'type':'time'})
     )
-
+    
     class Meta(forms.ModelForm):
         model = UserTasks
         fields = ('title', 'description','task_due_date','task_due_time',)
@@ -39,11 +39,12 @@ class ViewTaskDetailsForm(forms.ModelForm):
         label="Task's due time", required=False,
         widget=forms.widgets.TimeInput(attrs={'type':'time','readonly':'readonly'})
     )
-
+    completed_task = forms.BooleanField(label='Completed this task?',
+        required = False, widget=forms.widgets.CheckboxInput(attrs={'class': 'checkbox-inline'}),
+    )
     class Meta(forms.ModelForm):
         model = UserTasks
-        # fields = ('title', 'description','completed_task','task_due_date','task_due_time',)
-        fields = ('title', 'description','task_due_date','task_due_time',)
+        fields = ('title', 'description','task_due_date','task_due_time','completed_task',)
 
 
 class AllTasksForm(forms.ModelForm):
