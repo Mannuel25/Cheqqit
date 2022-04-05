@@ -32,6 +32,7 @@
             <form id="form" method="post" action="">
                 {% csrf_token %}
                 {% for task in tasks %}
+                {% if task.completed_task == False %}
                 <i class='bx bx-checkbox' style="font-size: 25.5px; vertical-align: middle; font-weight: lighter;"></i>
                 <label for="task"><a href="{% url 'task_detail' task.slug %}" style="text-decoration: none;color: black; margin-left: 3.5px;">{{task|capfirst|truncatechars:30}}</a></label><br>
                 {% if task.description != '' and task.task_due_time != None and task.task_due_date != None %}
@@ -54,7 +55,9 @@
                 {% elif task.description == '' and task.task_due_time == None and task.task_due_date == None %}
                 {% endif %}
                 <hr>
+                {% endif %}
                 {% endfor %}
+
             </form>
             
     </section>
