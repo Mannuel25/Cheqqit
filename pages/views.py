@@ -42,9 +42,9 @@ class InboxView(LoginRequiredMixin, ListView):
         for i, j in task_info.items():
             if j == True:
                 # print('Success!>>> {1} : {0}'.format(i,j))
-                messages.success(self.request, f'{i} successfully completed!')
+                messages.success(self.request, f'{list(task_info)[-1]} successfully completed!')
             # else: print('naa!')
-        task_info.clear()
+        # task_info.clear()
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
