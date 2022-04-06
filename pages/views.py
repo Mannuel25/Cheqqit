@@ -50,11 +50,16 @@ class InboxView(LoginRequiredMixin, ListView):
         # print('\nget:', get_task_title)
         # print('len of task completed:', len(task_completed))
         # print('tas comple:', task_completed)
-        if len(task_completed) > 0:
-            if task_completed[-1] == True:
-                selected_task = ' '.join(i for i in get_task_title)
-                # print(f'{selected_task} successfully completed!')
-                messages.success(self.request, f'{selected_task} successfully completed!')    
+        if task_completed[-1] == True:
+            selected_task = ' '.join(i for i in get_task_title)
+            print(f'{selected_task} successfully completed!')
+            messages.success(self.request, f'{selected_task} successfully completed!')    
+
+        # if len(task_completed) > 0:
+        #     if task_completed[-1] == True:
+        #         selected_task = ' '.join(i for i in get_task_title)
+        #         # print(f'{selected_task} successfully completed!')
+        #         messages.success(self.request, f'{selected_task} successfully completed!')    
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -165,19 +170,19 @@ def UpdateTask(request, slug):
     
     if request.method == 'POST':
         form = UpdateTaskForm(request.POST, instance=user_task)
+        complete = form.cleaned_data.get('completed_task')
+        # print('\n ++++ complete:', complete)
+        task_completed.append(complete)
+        if complete ==  True:
+            split_slug = [i for i in slug.split('-')]
+            for i in split_slug:
+                while '-' in split_slug:
+                    split_slug.remove('-')
+            split_slug.pop()
+            for i in split_slug:
+                get_task_title.append(i)
+            # print('\nget 22--:', get_task_title)
         if form.is_valid():
-            complete = form.cleaned_data.get('completed_task')
-            # print('\n ++++ complete:', complete)
-            task_completed.append(complete)
-            if complete ==  True:
-                split_slug = [i for i in slug.split('-')]
-                for i in split_slug:
-                    while '-' in split_slug:
-                        split_slug.remove('-')
-                split_slug.pop()
-                for i in split_slug:
-                    get_task_title.append(i)
-                # print('\nget 22--:', get_task_title)
             form.save()
             return redirect('inbox')
         
