@@ -22,6 +22,7 @@ class FeaturesPageView(TemplateView):
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
 number_of_undone_tasks, all_completed_tasks = [], []
+task_info = {}
 
 class InboxView(LoginRequiredMixin, ListView):
     model = UserTasks
@@ -37,6 +38,13 @@ class InboxView(LoginRequiredMixin, ListView):
         number_of_undone_tasks.append(context['no_of_undone_tasks'])
         context['all_completed_tasks'] = set(all_completed_tasks) 
         
+        # print('dct>>>>', task_info)
+        for i, j in task_info.items():
+            if j == True:
+                # print('Success!>>> {1} : {0}'.format(i,j))
+                messages.success(self.request, f'{i} successfully completed!')
+            # else: print('naa!')
+        task_info.clear()
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -144,8 +152,20 @@ def UpdateTask(request, slug):
     
     if request.method == 'POST':
         form = UpdateTaskForm(request.POST, instance=user_task)
+        
         if form.is_valid():
+            box_checked = form.cleaned_data.get('completed_task')
+            # print('\n\n -- box_checked:', box_checked)  
+            split_slug = [i for i in slug.split('-')]
+            for i in split_slug:
+                while '-' in split_slug:
+                    split_slug.remove('-')
+            split_slug.pop()
+            k = [i for i in split_slug]
+            # print('\nk--:', k)
+            task_info[' '.join(i for i in k)] = box_checked
             form.save()
+            k.clear()
             return redirect('inbox')
         
     context = {'form':form, 'slug':slug, 'no_of_undone_tasks':number_of_undone_tasks[-1]}
