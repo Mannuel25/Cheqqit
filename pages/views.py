@@ -70,6 +70,15 @@ class TodayView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     login_url = 'login'
 
+    # def form_valid(self, form):
+    #     if self.request.method == 'POST':
+    #         form =  AllTasksForm(self.request.POST or None)
+    #         list_ = self.request.POST.getlist('checkbox')
+    #         for i in list_:
+    #             selected_task.append(i)
+    #             messages.success(self.request, f'{i} completed')
+    #         return redirect('today')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
