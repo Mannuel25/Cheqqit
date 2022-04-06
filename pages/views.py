@@ -22,7 +22,7 @@ class FeaturesPageView(TemplateView):
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
 number_of_undone_tasks, all_completed_tasks = [], []
-get_task_title, task_completed = [], []
+get_task_title, task_completed = [], [False]
 
 class InboxView(LoginRequiredMixin, ListView):
     model = UserTasks
@@ -31,32 +31,22 @@ class InboxView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     success_url = reverse_lazy('inbox')
 
-    # def form_valid(self, form):
-    #     if self.request.method == 'POST':
-    #         form =  AllTasksForm(self.request.POST or None)
-    #         list_ = self.request.POST.getlist('checkbox')
-    #         for i in list_:
-    #             done_tasks.append(i)
-    #             messages.success(self.request, f'{i} completed') 
-    #         return redirect('inbox')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         number_of_undone_tasks.append(context['no_of_undone_tasks'])
         context['all_completed_tasks'] = set(all_completed_tasks) 
-        if len(task_completed) > 0:
-            if task_completed[-1] == True:
-                selected_task = ' '.join(i for i in get_task_title)
-                messages.success(self.request, f'{selected_task} successfully completed!')    
+        if task_completed[-1] == True:
+            selected_task = ' '.join(i for i in get_task_title)
+            messages.success(self.request, f'{selected_task} successfully completed!')    
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
-        task_completed.clear()
+        # task_completed.clear()
         get_task_title.clear()
         return context
 
