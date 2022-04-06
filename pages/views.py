@@ -45,16 +45,10 @@ class InboxView(LoginRequiredMixin, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         number_of_undone_tasks.append(context['no_of_undone_tasks'])
-        # print('no_of undone tasks:', number_of_undone_tasks)
         context['all_completed_tasks'] = set(all_completed_tasks) 
-        # print('\nget:', get_task_title)
-        # print('len of task completed:', len(task_completed))
-        # print('tas comple:', task_completed)
-
         if len(task_completed) > 0:
             if task_completed[-1] == True:
                 selected_task = ' '.join(i for i in get_task_title)
-                # print(f'{selected_task} successfully completed!')
                 messages.success(self.request, f'{selected_task} successfully completed!')    
 
         search_input = self.request.GET.get('search-area') or ''
@@ -72,15 +66,6 @@ class TodayView(LoginRequiredMixin, ListView):
     success_url = reverse_lazy('today') 
     context_object_name = 'tasks'
     login_url = 'login'
-
-    # def form_valid(self, form):
-    #     if self.request.method == 'POST':
-    #         form =  AllTasksForm(self.request.POST or None)
-    #         list_ = self.request.POST.getlist('checkbox')
-    #         for i in list_:
-    #             selected_task.append(i)
-    #             messages.success(self.request, f'{i} completed')
-    #         return redirect('today')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -166,20 +151,20 @@ def UpdateTask(request, slug):
     
     if request.method == 'POST':
         form = UpdateTaskForm(request.POST, instance=user_task)
-        complete = form.cleaned_data.get('completed_task')
-        # print('\n ++++ complete:', complete)
-        task_completed.append(complete)
-        if complete ==  True:
-            split_slug = [i for i in slug.split('-')]
-            for i in split_slug:
-                while '-' in split_slug:
-                    split_slug.remove('-')
-            split_slug.pop()
-            for i in split_slug:
-                get_task_title.append(i)
-            # print('\nget 22--:', get_task_title)
         if form.is_valid():
             form.save()
+            complete = form.cleaned_data.get('completed_task')
+            task_completed.append(complete)
+            if complete:
+                # print('\n ++++ complete:', complete)
+                split_slug = [i for i in slug.split('-')]
+                for i in split_slug:
+                    while '-' in split_slug:
+                        split_slug.remove('-')
+                split_slug.pop()
+                for i in split_slug:
+                    get_task_title.append(i)
+                # print('\nget 22--:', get_task_title)
             return redirect('inbox')
         
     context = {'form':form, 'slug':slug, 'no_of_undone_tasks':number_of_undone_tasks[-1]}
