@@ -48,6 +48,8 @@ class InboxView(LoginRequiredMixin, ListView):
         # print('no_of undone tasks:', number_of_undone_tasks)
         context['all_completed_tasks'] = set(all_completed_tasks) 
         # print('\nget:', get_task_title)
+        # print('len of task completed:', len(task_completed))
+        # print('tas comple:', task_completed)
         if len(task_completed) > 0:
             if task_completed[-1] == True:
                 selected_task = ' '.join(i for i in get_task_title)
@@ -165,9 +167,9 @@ def UpdateTask(request, slug):
         form = UpdateTaskForm(request.POST, instance=user_task)
         if form.is_valid():
             complete = form.cleaned_data.get('completed_task')
+            # print('\n ++++ complete:', complete)
             task_completed.append(complete)
-            if complete:
-                # print('\n ++++ complete:', complete)
+            if complete ==  True:
                 split_slug = [i for i in slug.split('-')]
                 for i in split_slug:
                     while '-' in split_slug:
