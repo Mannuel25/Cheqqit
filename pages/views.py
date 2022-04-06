@@ -42,7 +42,6 @@ class InboxView(LoginRequiredMixin, ListView):
             context['tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
-        get_task_title.clear()
         return context
 
 class TodayView(LoginRequiredMixin, ListView):
