@@ -48,12 +48,7 @@ class InboxView(LoginRequiredMixin, ListView):
         # print('no_of undone tasks:', number_of_undone_tasks)
         context['all_completed_tasks'] = set(all_completed_tasks) 
         # print('\nget:', get_task_title)
-        if len(task_completed) > 0:
-            if task_completed[-1] == True:
-                selected_task = ' '.join(i for i in get_task_title)
-                # print(f'{selected_task} successfully completed!')
-                display_message = selected_task[0:7] + '... successfully completed!'
-                messages.success(self.request, f'{display_message}')
+        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
@@ -177,7 +172,7 @@ def UpdateTask(request, slug):
                     get_task_title.append(i)
                 # print('\nget 22--:', get_task_title)
             form.save()
-            return redirect('inbox')
+        return redirect('inbox')
         
     context = {'form':form, 'slug':slug, 'no_of_undone_tasks':number_of_undone_tasks[-1]}
     return render(request, 'update_task.html', context)
