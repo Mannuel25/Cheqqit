@@ -25,7 +25,7 @@
         {% for message in messages %}
         <div class="alert alert-success" id='alert_msg' style="width: 40%; margin-left: 605px;">
             <button type="button" class="close" data-dismiss="alert" style="outline: none;">&times;</button>
-            {{ message|truncatechars:30 }}
+            {{ message }}
         </div>
         {% endfor %}
         <div style="margin-left: 34px;">
