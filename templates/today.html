@@ -25,12 +25,6 @@
             <h4 style="display:inline;">Today</h4>
             <h6 style="display:inline;">{{ today_date }}</h6>
         </div>
-        {% for message in messages %}
-        <div class="alert alert-success" id='alert_msg' style="width: 40%; margin-left: 605px;">
-            <button type="button" class="close" data-dismiss="alert" style="outline: none;">&times;</button>
-            {{ message|truncatechars:30 }}
-        </div>
-        {% endfor %}
         <div style="margin-left: 34px;">
             <form id="form" method="post" action="">
                 {% csrf_token %}
