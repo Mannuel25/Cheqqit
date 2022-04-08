@@ -3,8 +3,7 @@ from .models import UserTasks
 
 class AddTaskForm(forms.ModelForm):
     """
-    this form will be used to either create a task 
-    or update the task created
+    this form will be used to create or update a task
     """
     title = forms.CharField(max_length=100, widget= forms.TextInput
         (attrs={'placeholder':"Enter the task's title"}))
@@ -49,7 +48,7 @@ class UpdateTaskForm(forms.ModelForm):
 
 class TaskDetailsForm(forms.ModelForm):
     """
-    this form will be used to only view the task/goal created
+    this form will be used to view the task created
     """
     title = forms.CharField(max_length=100, label="Task's title",
         required=False, widget= forms.TextInput(attrs={'readonly':'readonly'}))

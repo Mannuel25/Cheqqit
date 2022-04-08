@@ -123,9 +123,8 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
         context['search_input'] = search_input
         return context
 
-class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
+class CompletedTasksView(LoginRequiredMixin, ListView):
     model = UserTasks
-    # form_class = AllTasksForm
     template_name = 'completed_tasks.html'
     success_url = reverse_lazy('completed_tasks') 
     context_object_name = 'tasks'
@@ -135,7 +134,7 @@ class CompletedTasksView(LoginRequiredMixin, CreateView, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        context['all_completed_tasks'] = set(all_completed_tasks)     
+        context['all_completed_tasks'] = context['tasks'].filter(user=self.request.user, completed_task=True)
 
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
