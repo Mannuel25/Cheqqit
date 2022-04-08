@@ -31,15 +31,6 @@ class InboxView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     success_url = reverse_lazy('inbox')
 
-    # def form_valid(self, form):
-    #     if self.request.method == 'POST':
-    #         form =  AllTasksForm(self.request.POST or None)
-    #         list_ = self.request.POST.getlist('checkbox')
-    #         for i in list_:
-    #             done_tasks.append(i)
-    #             messages.success(self.request, f'{i} completed') 
-    #         return redirect('inbox')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
@@ -48,11 +39,21 @@ class InboxView(LoginRequiredMixin, ListView):
         # print('no_of undone tasks:', number_of_undone_tasks)
         context['all_completed_tasks'] = set(all_completed_tasks) 
         # print('\nget:', get_task_title)
-        if len(task_completed) > 0:
-            if task_completed[-1] == True:
-                selected_task = ' '.join(i for i in get_task_title)
-                # print(f'{selected_task} successfully completed!')
-                messages.success(self.request, f'{selected_task} successfully completed!')    
+
+        # print('len of task completed:', len(task_completed))
+        # print('\n\n\n tasks completed in inbox----:', task_completed)
+        # print('\ntask title in inbox +++ --:', get_task_title)
+
+        # if len(task_completed) > 0:
+        #     if task_completed[-1] == True:
+        #         selected_task = ' '.join(i for i in get_task_title)
+        #         # print(f'{selected_task} successfully completed!')
+        #         messages.success(self.request, f'{selected_task} successfully completed!')    
+
+        if True in task_completed:
+            selected_task = ' '.join(i for i in get_task_title)[0:7] + '...'
+            # print(f'----\n {selected_task} successfully completed!')
+            messages.success(self.request, f'{selected_task} successfully completed!')    
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -175,7 +176,9 @@ def UpdateTask(request, slug):
                 split_slug.pop()
                 for i in split_slug:
                     get_task_title.append(i)
-                # print('\nget 22--:', get_task_title)
+                print('\ntask title in update +++ --:', get_task_title)
+            print('\n\n\n tasks completed in update ++++++:', task_completed)
+            
             form.save()
             return redirect('inbox')
         
