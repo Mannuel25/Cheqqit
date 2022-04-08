@@ -38,15 +38,15 @@ class InboxView(LoginRequiredMixin, ListView):
         number_of_undone_tasks.append(context['no_of_undone_tasks'])
         context['all_completed_tasks'] = set(all_completed_tasks) 
 
-        if task_completed[0] == True:
+        if True in task_completed:
             selected_task = ' '.join(i for i in get_task_title)
             if len(selected_task) > 8:
                 selected_task = selected_task[0:7] + '...'
             else:
                 selected_task = selected_task
             messages.success(self.request, f'{selected_task} successfully completed!')    
-        get_task_title.clear()
-        task_completed.clear()
+            get_task_title.clear()
+            task_completed.clear()
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
