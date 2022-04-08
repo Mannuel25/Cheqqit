@@ -159,7 +159,6 @@ def UpdateTask(request, slug):
             complete = form.cleaned_data.get('completed_task')
             task_completed.append(complete)
             if complete:
-                # print('\n ++++ complete:', complete)
                 split_slug = [i for i in slug.split('-')]
                 for i in split_slug:
                     while '-' in split_slug:
@@ -167,9 +166,6 @@ def UpdateTask(request, slug):
                 split_slug.pop()
                 for i in split_slug:
                     get_task_title.append(i)
-                print('\ntask title in update +++ --:', get_task_title)
-            print('\n\n\n tasks completed in update ++++++:', task_completed)
-            
             form.save()
             return redirect('inbox')
         
