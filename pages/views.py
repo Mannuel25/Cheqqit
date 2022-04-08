@@ -21,8 +21,8 @@ class FeaturesPageView(TemplateView):
 
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
-number_of_undone_tasks, all_completed_tasks = [], []
-get_task_title, task_completed = [], []
+no_of_incompleted_tasks = []
+get_task_title, is_task_completed = [], []
 
 class InboxView(LoginRequiredMixin, ListView):
     model = UserTasks
@@ -35,10 +35,9 @@ class InboxView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        number_of_undone_tasks.append(context['no_of_undone_tasks'])
-        context['all_completed_tasks'] = set(all_completed_tasks) 
+        no_of_incompleted_tasks.append(context['no_of_undone_tasks'])
 
-        if True in task_completed:
+        if True in is_task_completed:
             selected_task = ' '.join(i for i in get_task_title)
             if len(selected_task) > 8:
                 selected_task = selected_task[0:7] + '...'
@@ -46,7 +45,7 @@ class InboxView(LoginRequiredMixin, ListView):
                 selected_task = selected_task
             messages.success(self.request, f'{selected_task} successfully completed!')    
             get_task_title.clear()
-            task_completed.clear()
+            is_task_completed.clear()
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -62,27 +61,16 @@ class TodayView(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
     login_url = 'login'
 
-    # def form_valid(self, form):
-    #     if self.request.method == 'POST':
-    #         form =  AllTasksForm(self.request.POST or None)
-    #         list_ = self.request.POST.getlist('checkbox')
-    #         for i in list_:
-    #             selected_task.append(i)
-    #             messages.success(self.request, f'{i} completed')
-    #         return redirect('today')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         context['today_date'] = today_date
         format_today_date = datetime.today().strftime('%Y-%m-%d')
-        
+        your_today_tasks = []
         for i in context['tasks']:
             if i.task_due_date != None:
                 tasks_due_dates.append(str(i.task_due_date))
-        
-        your_today_tasks = []
 
         for i in context['tasks']:
             for j in tasks_due_dates:
@@ -90,7 +78,6 @@ class TodayView(LoginRequiredMixin, ListView):
                     your_today_tasks.append(i)
 
         context['your_today_tasks'] = set(your_today_tasks)
-        context['all_completed_tasks'] = set(all_completed_tasks)     
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -143,20 +130,15 @@ class CompletedTasksView(LoginRequiredMixin, ListView):
         context['search_input'] = search_input
         return context
 
-class LabelsView(LoginRequiredMixin, TemplateView):
-    template_name = 'labels.html'
-    login_url = 'login'
-
 @login_required(login_url='login')
 def UpdateTask(request, slug):
     user_task = get_object_or_404(UserTasks, slug=slug)
     form = UpdateTaskForm(instance=user_task)
-    
     if request.method == 'POST':
         form = UpdateTaskForm(request.POST, instance=user_task)
         if form.is_valid():
             complete = form.cleaned_data.get('completed_task')
-            task_completed.append(complete)
+            is_task_completed.append(complete)
             if complete:
                 split_slug = [i for i in slug.split('-')]
                 for i in split_slug:
@@ -168,7 +150,7 @@ def UpdateTask(request, slug):
             form.save()
             return redirect('inbox')
         
-    context = {'form':form, 'slug':slug, 'no_of_undone_tasks':number_of_undone_tasks[-1]}
+    context = {'form':form, 'slug':slug, 'no_of_undone_tasks':no_of_incompleted_tasks[-1]}
     return render(request, 'update_task.html', context)
 
 @login_required(login_url='login')
@@ -177,7 +159,7 @@ def TaskDetail(request, slug):
     task_title = UserTasks.objects.get(slug=slug)
     form = TaskDetailsForm(instance=user_task)
     context = {'form':form, 'slug':slug, 
-        'task_title':task_title,  'no_of_undone_tasks':number_of_undone_tasks[-1]}
+        'task_title':task_title,  'no_of_undone_tasks':no_of_incompleted_tasks[-1]}
     return render(request, 'task_detail.html', context)
 
 @login_required(login_url='login')
@@ -192,15 +174,11 @@ def page_not_found(request, exception):
 def server_error(request, exception=None):
     return render(request, '500.html')
 
-
 class TaskReorder(View):
     def postion(self, request):
         form = TaskPositionForm(request.POST)
-
         if form.is_valid():
             positionList = form.cleaned_data["position"].split(',')
-
             with transaction.atomic():
                 self.request.user.set_task_order(positionList)
-
         return redirect(reverse_lazy('inbox'))
