@@ -45,8 +45,8 @@ class InboxView(LoginRequiredMixin, ListView):
             else:
                 selected_task = selected_task
             messages.success(self.request, f'{selected_task} successfully completed!')    
-            get_task_title.clear()
-            task_completed.clear()
+        get_task_title.clear()
+        task_completed.clear()
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
