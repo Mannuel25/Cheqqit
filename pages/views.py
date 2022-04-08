@@ -36,32 +36,23 @@ class InboxView(LoginRequiredMixin, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         number_of_undone_tasks.append(context['no_of_undone_tasks'])
-        # print('no_of undone tasks:', number_of_undone_tasks)
         context['all_completed_tasks'] = set(all_completed_tasks) 
-        # print('\nget:', get_task_title)
-
-        # print('len of task completed:', len(task_completed))
-        # print('\n\n\n tasks completed in inbox----:', task_completed)
-        # print('\ntask title in inbox +++ --:', get_task_title)
-
-        # if len(task_completed) > 0:
-        #     if task_completed[-1] == True:
-        #         selected_task = ' '.join(i for i in get_task_title)
-        #         # print(f'{selected_task} successfully completed!')
-        #         messages.success(self.request, f'{selected_task} successfully completed!')    
+        
 
         if True in task_completed:
-            selected_task = ' '.join(i for i in get_task_title)[0:7] + '...'
-            # print(f'----\n {selected_task} successfully completed!')
+            selected_task = ' '.join(i for i in get_task_title)
+            if len(selected_task) > 8:
+                selected_task = selected_task[0:7] + '...'
+            else:
+                selected_task = selected_task
             messages.success(self.request, f'{selected_task} successfully completed!')    
+            get_task_title.clear()
 
-        search_input = self.request.GET.get('search-area') or ''
+        search_inp ut = self.request.GET.get('search-area') or ''
         if search_input:
             context['tasks'] = context['tasks'].filter(
                 title__contains=search_input)
         context['search_input'] = search_input
-        task_completed.clear()
-        get_task_title.clear()
         return context
 
 class TodayView(LoginRequiredMixin, ListView):
