@@ -17,5 +17,5 @@ urlpatterns = [
     path('task-reorder/', TaskReorder.as_view(), name='task-reorder'),
 ]
 
-# handler404 = 'pages.views.page_not_found'
-# handler500 = 'pages.views.server_error'
+handler404 = 'pages.views.page_not_found'
+handler500 = 'pages.views.server_error'

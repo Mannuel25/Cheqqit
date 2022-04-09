@@ -31,8 +31,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('DEBUG')=='TRUE':
+    DEBUG = True
+elif os.environ.get('DEBUG') =='False':
+    DEBUG = False
 
 ALLOWED_HOSTS = ['cheqqit.herokuapp.com', 'localhost', '127.0.0.1']
 
