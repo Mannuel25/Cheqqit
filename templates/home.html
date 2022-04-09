@@ -7,15 +7,14 @@
   <div class="container">
     <div class="d-sm-flex align-items-center justify-content-between">
       <div>
-        <h1>Each Day, Achieve More</h1>
-        <br>
-        <p style="font-size: 21px;">A lovely and simple way to keep track of your tasks.</p>
-        <br>
-          <p>
-            <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get Started</a>
-          </p>
+        <h1>Each Day, Achieve More!</h1>
+        <p class="lead my-4" style="font-size: 24px;">
+          A lovely and simple way to keep track of your tasks.
+        </p><br>
+        <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Get Started</a>
       </div>
-      <img class="img-fluid w-50 d-none d-sm-block" src="{% static 'images/homepage_image.JPG' %}"/>
+      <img class="img-fluid w-50 d-none d-sm-block" src="{% static 'images/homepage_image.JPG' %}" alt="" />
+    </div>
     </div>
   </div>
 </section>
