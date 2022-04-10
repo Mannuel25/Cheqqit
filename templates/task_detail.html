@@ -26,27 +26,19 @@
                 <h4>Task Details</h4>
             </div>
             <div style="margin-left: 34px;">
-                <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
-                    <div>
-                        <div class="mx-auto" style="width: 600px;">
-                            <div class="card" style="border-color: blueviolet; border-style: solid; border-radius: 23px;">
-                                <div class="card-body">
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                        {{ form|crispy }}
-                                        <br>
-                                        <button type="button" class="btn btn-success" box-shadow="none"><a
-                                                href="{% url 'update_task' slug=form.instance.slug %}"
-                                                style="text-decoration: none; color: white;">Update
-                                                task</a></button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" box-shadow="none"><a
-                                                style="text-decoration: none; color: white;">Delete task</a></button>
-                                        <br>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card mx-auto" style="border-color: blueviolet; border-style: solid; border-radius: 23px;">
+                    <div class="card-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <br>
+                            <button type="button" class="btn btn-success" box-shadow="none"><a
+                                    href="{% url 'update_task' slug=form.instance.slug %}"
+                                    style="text-decoration: none; color: white;">Update
+                                    task</a></button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                box-shadow="none"><a style="text-decoration: none; color: white;">Delete task</a></button>
+                        </form>
                     </div>
                 </div>
         </section>
@@ -74,26 +66,6 @@
             </div>
         </div>
     
-        <script>
-            let sidebar = document.querySelector(".sidebar");
-            let closeBtn = document.querySelector("#btn");
-            let searchBtn = document.querySelector(".bx-search");
-            closeBtn.addEventListener("click", () => {
-                sidebar.classList.toggle("open");
-                menuBtnChange();
-            });
-            searchBtn.addEventListener("click", () => {
-                w
-                sidebar.classList.toggle("open");
-                menuBtnChange();
-            });
-            function menuBtnChange() {
-                if (sidebar.classList.contains("open")) {
-                    closeBtn.classList.replace("bx-menu", "bx-x")
-                } else {
-                    closeBtn.classList.replace("bx-x", "bx-menu")
-                }
-            }
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
