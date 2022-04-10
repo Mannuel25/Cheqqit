@@ -16,6 +16,44 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'favicons/site.webmanifest' %}">
+    <!-- <style>
+        .card {
+            height: 28.125rem;
+            width: 70%;
+            position: relative;
+            left: 18.75rem;
+            top: 12.5rem;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-end;
+            text-decoration: none;
+            border: 0.25rem solid;
+            border-color: black;
+            background: url(./Images/1.jpg);
+            background-repeat: no-repeat;
+            background-size: 105%;
+            margin: 0 !important;
+        }
+        .inner {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+            background: white;
+            box-sizing: border-box;
+            padding: 40px;
+            border: solid;
+            border-color: grey;
+            border-radius: 2px;
+        }
+        @media(max-width: 750px) {
+            .inner {
+                height: 70%;
+            }
+        }
+    </style> -->
 </head>
 
 <body>
@@ -26,8 +64,20 @@
         </div>
         <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
             <div>
-                <div class="mx-auto" style="width: 600px;">
-                    <div class="card" style="border-color: blueviolet; border-style: solid; border-radius: 23px;">
+                <div class="card mx-auto" style="border-color: blueviolet; border-style: solid; border-radius: 23px;">
+                    <div class="card-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-success" box-shadow="none">Save</button>
+                            <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}"
+                                    style="text-decoration: none; color: white;" box-shadow="none">Cancel</a></button>
+                            <br>
+                        </form>
+                    </div>
+                </div>
+                <!-- <div class="mx-auto" style="width: 600px;">
+                    <div class="card" style="border-color: blueviolet; border-style: solid; border-radius: 23px; width: 100vh;">
                         <div class="card-body">
                             <form action="" method="post">
                                 {% csrf_token %}
@@ -39,7 +89,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- <div style="margin-left: 34px;">
