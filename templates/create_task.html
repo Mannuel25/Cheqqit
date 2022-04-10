@@ -62,7 +62,19 @@
         <div class="text" style="margin-left: 34px;">
             <h4>Add Task</h4>
         </div>
-        <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
+        <div class="card" style="margin-left: 8px;border-color: blueviolet; border-style: solid; border-radius: 23px;">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-success" box-shadow="none">Save</button>
+                    <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}" style="text-decoration: none; color: white;"
+                            box-shadow="none">Cancel</a></button>
+                    <!-- <br>x -->
+                </form>
+            </div>
+        </div>
+        <!-- <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
             <div>
                 <div class="card mx-auto" style="border-color: blueviolet; border-style: solid; border-radius: 23px;">
                     <div class="card-body">
@@ -75,7 +87,7 @@
                             <br>
                         </form>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="mx-auto" style="width: 600px;">
                     <div class="card" style="border-color: blueviolet; border-style: solid; border-radius: 23px; width: 100vh;">
                         <div class="card-body">
@@ -90,8 +102,8 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
-        </div>
+            <!-- </div>
+        </div> -->
         <!-- <div style="margin-left: 34px;">
             <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
                 <div>
