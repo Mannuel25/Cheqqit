@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} Add Task - Cheqqit {% endblock title %}</title>
-	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/109fe23f15.js" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -24,28 +24,20 @@
         <div class="text" style="margin-left: 34px;">
             <h4>Add Task</h4>
         </div>
-        <div style="margin-left: 34px;">
-            <div class="container-fluid padding" style="margin: auto; float: none; margin-bottom: 10px">
-                <div>
-                    <div class="mx-auto" style="width: 600px;">
-                        <div class="card" style="border-color: blueviolet; border-style: solid; border-radius: 23px;">
-                            <div class="card-body">
-                                <form action="" method="post">
-                                    {% csrf_token %}
-                                    {{ form|crispy }}
-                                    <button type="submit" class="btn btn-success" box-shadow="none">Save</button>
-                                    <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}"
-                                            style="text-decoration: none; color: white;"
-                                            box-shadow="none">Cancel</a></button>
-                                    <br>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="card"
+            style="margin-left: 8px;border-color: blueviolet; border-style: solid; border-radius: 23px; margin-right: 8px;">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-success" box-shadow="none">Save</button>
+                    <button type="button" class="btn btn-danger"><a href="{% url 'inbox' %}"
+                            style="text-decoration: none; color: white;" box-shadow="none">Cancel</a></button>
+                </form>
             </div>
+        </div>
     </section>
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
