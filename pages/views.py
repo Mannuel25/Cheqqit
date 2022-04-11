@@ -78,6 +78,7 @@ class TodayView(LoginRequiredMixin, ListView):
                     your_today_tasks.append(i)
 
         context['your_today_tasks'] = set(your_today_tasks)
+        context['no_of_today_tasks'] = len(context['your_today_tasks'])
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
