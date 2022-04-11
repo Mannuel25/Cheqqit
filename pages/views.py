@@ -35,7 +35,7 @@ class InboxView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
-        no_of_incompleted_tasks.append(context['no_of_undone_tasks'])
+        self.request.session['no_of_undone_tasks'] = context['no_of_undone_tasks']
 
         if True in is_task_completed:
             selected_task = ' '.join(i for i in get_task_title)
@@ -65,9 +65,11 @@ class TodayView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+        self.request.session['no_of_undone_tasks'] = context['no_of_undone_tasks']
         context['today_date'] = today_date
         format_today_date = datetime.today().strftime('%Y-%m-%d')
         your_today_tasks = []
+        
         for i in context['tasks']:
             if i.task_due_date != None:
                 tasks_due_dates.append(str(i.task_due_date))
@@ -103,6 +105,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+        self.request.session['no_of_undone_tasks'] = context['no_of_undone_tasks']
         
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
@@ -122,8 +125,9 @@ class CompletedTasksView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
+        self.request.session['no_of_undone_tasks'] = context['no_of_undone_tasks']
         context['all_completed_tasks'] = context['tasks'].filter(user=self.request.user, completed_task=True)
-
+        
         search_input = self.request.GET.get('search-box') or ''
         if search_input:
             context['all_completed_tasks'] = context['tasks'].filter(
@@ -150,8 +154,7 @@ def UpdateTask(request, slug):
                     get_task_title.append(i)
             form.save()
             return redirect('inbox')
-        
-    context = {'form':form, 'slug':slug, 'no_of_undone_tasks':no_of_incompleted_tasks[-1]}
+    context = {'form':form, 'slug':slug, 'no_of_undone_tasks':request.session['no_of_undone_tasks']}
     return render(request, 'update_task.html', context)
 
 @login_required(login_url='login')
@@ -160,7 +163,7 @@ def TaskDetail(request, slug):
     task_title = UserTasks.objects.get(slug=slug)
     form = TaskDetailsForm(instance=user_task)
     context = {'form':form, 'slug':slug, 
-        'task_title':task_title,  'no_of_undone_tasks':no_of_incompleted_tasks[-1]}
+        'task_title':task_title,  'no_of_undone_tasks':request.session['no_of_undone_tasks']}
     return render(request, 'task_detail.html', context)
 
 @login_required(login_url='login')
