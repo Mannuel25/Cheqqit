@@ -20,7 +20,7 @@
 
 <body>
     {% include 'sidebar.html' %}
-    <section class="home-section" style="background-color: white;">
+    <section class="home-section" style="background-color: white;" id="btn">
         <div class="text" style="margin-left: 34px;"><legend>Inbox</legend></div>
         {% for message in messages %}
         <div class="alert alert-success" id='alert_msg' style="width: 40%; margin-left: 605px;">
