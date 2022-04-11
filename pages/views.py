@@ -20,7 +20,6 @@ class FeaturesPageView(TemplateView):
     template_name = 'features.html'
 
 today_date = datetime.today().strftime('%a %b %d, %Y')
-tasks_due_dates, today_tasks = [], []
 get_task_title, is_task_completed = [], []
 
 class InboxView(LoginRequiredMixin, ListView):
@@ -67,7 +66,7 @@ class TodayView(LoginRequiredMixin, ListView):
         self.request.session['no_of_undone_tasks'] = context['no_of_undone_tasks']
         context['today_date'] = today_date
         format_today_date = datetime.today().strftime('%Y-%m-%d')
-        your_today_tasks = []
+        your_today_tasks, tasks_due_dates = [], []
         
         for i in context['tasks']:
             if i.task_due_date != None:
