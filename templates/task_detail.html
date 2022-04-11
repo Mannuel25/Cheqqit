@@ -32,18 +32,15 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <button type="button" class="btn btn-success" box-shadow="none"><a href="{% url 'update_task' slug=form.instance.slug %}" style="text-decoration: none; color: white; float: left; margin: 12px;">Update task</a></button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" box-shadow="none"><a
-                                style="text-decoration: none; color: white;float: right;margin: 12px;">Delete task</button>
-
-                        <!-- <button type="button" class="btn btn-success" box-shadow="none"><a
+                        <br>
+                        <button type="button" class="btn btn-success" box-shadow="none"><a
                                 href="{% url 'update_task' slug=form.instance.slug %}"
                                 style="text-decoration: none; color: white;">Update
-                                task</a></button>
+                                </a></button>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                             data-bs-target="#exampleModal" box-shadow="none"><a
-                                style="text-decoration: none; color: white;">Delete task</a></button> -->
+                                style="text-decoration: none; color: white;">Delete</a></button>
+                        <br>
                     </form>
                 </div>
             </div>
