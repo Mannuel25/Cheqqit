@@ -30,11 +30,9 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <!-- <br> -->
                     <button type="submit" class="btn btn-success" box-shadow="none">Update</button>
                     <button type="button" class="btn btn-danger" box-shadow="none"><a href="{% url 'inbox' %}"
                             style="text-decoration: none; color: white;">Cancel</a></button>
-                    <!-- <br> -->
                 </form>
             </div>
         </div>
