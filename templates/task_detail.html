@@ -19,6 +19,7 @@
 </head>
 
 <body>
+
     <body>
         {% include 'sidebar.html' %}
         <section class="home-section" style="background-color: white;">
@@ -31,13 +32,23 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <!-- <button type="button" class="btn btn-success" box-shadow="none"><a href="{% url 'update_task' slug=form.instance.slug %}" style="text-decoration: none; color: white;">Update task</a></button>
-                        <button type="button" class="btn btn-danger" box-shadow="none"><a style="text-decoration: none; color: white;">Delete task</a></button> -->
+                        <button type="button" class="btn btn-success" box-shadow="none"><a href="{% url 'update_task' slug=form.instance.slug %}" style="text-decoration: none; color: white;">Update task</a></button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" box-shadow="none"><a
+                                style="text-decoration: none; color: white;">Delete task</button>
+
+                        <!-- <button type="button" class="btn btn-success" box-shadow="none"><a
+                                href="{% url 'update_task' slug=form.instance.slug %}"
+                                style="text-decoration: none; color: white;">Update
+                                task</a></button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" box-shadow="none"><a
+                                style="text-decoration: none; color: white;">Delete task</a></button> -->
                     </form>
                 </div>
             </div>
         </section>
-    
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -60,7 +71,7 @@
                 </div>
             </div>
         </div>
-    
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
