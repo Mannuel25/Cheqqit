@@ -1,12 +1,8 @@
 from django.urls import path
-from .views import HomePageView
-from .views import FeaturesPageView
-from .views import InboxView
-from .views import CreateTaskView, UpdateTask, TaskDetail, DeleteTask,TodayView, CompletedTasksView, TaskReorder
+from .views import HomePageView, InboxView, CreateTaskView, UpdateTask, TaskDetail, DeleteTask,TodayView, CompletedTasksView, TaskReorder
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
-    path('features/', FeaturesPageView.as_view(), name='features'),
     path('inbox/', InboxView.as_view(), name='inbox'),
     path('add_task/', CreateTaskView.as_view(), name='create_task'),
     path('completed_tasks/', CompletedTasksView.as_view(), name='completed_tasks'),

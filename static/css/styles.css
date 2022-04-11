@@ -239,12 +239,12 @@ body {
 
 .btn-danger {
     float: right;
-    margin: 12px;
+    margin: 7px;
 }
 
 .btn-success {
     float: left;
-    margin: 12px;
+    margin: 6px;
 }
 
 ::placeholder {

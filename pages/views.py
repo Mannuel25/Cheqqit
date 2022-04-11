@@ -16,8 +16,6 @@ from django.db import transaction
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
-class FeaturesPageView(TemplateView):
-    template_name = 'features.html'
 
 today_date = datetime.today().strftime('%a %b %d, %Y')
 get_task_title, is_task_completed = [], []
@@ -38,10 +36,10 @@ class InboxView(LoginRequiredMixin, ListView):
         if True in is_task_completed:
             selected_task = ' '.join(i for i in get_task_title)
             if len(selected_task) > 8:
-                selected_task = selected_task[0:7] + '...'
+                selected_task = selected_task[0:6] + '...'
             else:
                 selected_task = selected_task
-            messages.success(self.request, f'{selected_task} successfully completed!')    
+            messages.success(self.request, f'{selected_task} completed!')    
             get_task_title.clear()
             is_task_completed.clear()
 
