@@ -21,7 +21,6 @@ class FeaturesPageView(TemplateView):
 
 today_date = datetime.today().strftime('%a %b %d, %Y')
 tasks_due_dates, today_tasks = [], []
-no_of_incompleted_tasks = []
 get_task_title, is_task_completed = [], []
 
 class InboxView(LoginRequiredMixin, ListView):
@@ -80,8 +79,7 @@ class TodayView(LoginRequiredMixin, ListView):
                     your_today_tasks.append(i)
 
         context['your_today_tasks'] = set(your_today_tasks)
-        context['no_of_today_tasks'] = len(context['your_today_tasks'])
-
+        
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['your_today_tasks'] = context['tasks'].filter(
