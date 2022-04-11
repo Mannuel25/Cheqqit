@@ -146,12 +146,10 @@ body {
     transform: translateY(-50%);
     font-size: 22px;
     background: rgb(163, 88, 233);
-    /* background: #1d1b31; */
     color: #FFF;
 }
 
 .sidebar.open .bx-search:hover {
-    /* background: #1d1b31; */
     background: rgb(163, 88, 233);
     color: #FFF;
 }
