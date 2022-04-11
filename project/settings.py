@@ -36,7 +36,7 @@ SECRET_KEY = config('SECRET_KEY')
 # elif os.environ.get('DEBUG') =='False':
 #     DEBUG = False
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['cheqqit.herokuapp.com', 'localhost', '127.0.0.1']
 
 
