@@ -23,14 +23,6 @@ body {
     font-size: 18px !important;
 }
         
-.navbar-toggler,
-.navbar-toggler:focus,
-.navbar-toggler:active,
-.navbar-toggler-icon:focus {
-    outline: none;
-    border: none;
-    box-shadow: none;
-}
 .sidebar {
     position: fixed;
     left: 0;
