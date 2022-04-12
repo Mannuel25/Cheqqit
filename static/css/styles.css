@@ -23,13 +23,14 @@ body {
     font-size: 18px !important;
 }
         
+.navbar-toggler,
 .navbar-toggler:focus,
 .navbar-toggler:active,
 .navbar-toggler-icon:focus {
     outline: none;
+    border: none;
     box-shadow: none;
 }
-
 .sidebar {
     position: fixed;
     left: 0;
@@ -202,20 +203,15 @@ body {
     border-radius: 12px;
 }
 
-    .home-section {
-        position: relative;
-        background: #E4E9F7;
-        min-height: 100vh;
-        top: 0;
-        left: 78px;
-        width: calc(100% - 78px);
-        transition: all 0.5s ease;
-    }
-
-/* .sidebar.open~.home-section {
-    left: 250px;
-    width: calc(100% - 250px);
-} */
+.home-section {
+    position: relative;
+    background: #E4E9F7;
+    min-height: 100vh;
+    top: 0;
+    left: 78px;
+    width: calc(100% - 78px);
+    transition: all 0.5s ease;
+}
 
 .home-section .text {
     display: inline-block;
