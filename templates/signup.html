@@ -16,7 +16,7 @@
 	<link rel="manifest" href="{% static 'favicons/site.webmanifest' %}">
 </head>
 <body>
-  <br><br>
+  <br>
   <a href="{% url 'home' %}"><img src="{% static 'images/img.png' %}" class="center-img" height="43px"></a>
   <br>
   <p style="font-size: 27px; text-align: center;">Sign up for Cheqqit</p>
@@ -28,9 +28,7 @@
             <form action="" method="post">
               {% csrf_token %}
               {{ form|crispy }}
-              <br>
               <button type="submit" class="btn btn-success mx-auto d-block form-control">Sign Up</button>
-              <br>
             </form>
             <p>Already have an account? <a href="{% url 'login' %}" style="text-decoration: none;">Sign In</a></p>
           </div>
