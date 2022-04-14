@@ -29,16 +29,58 @@ cd Cheqqit
 ```
 
 ## Create a virtual environment in the cheqqit directory
+Ensure you are in the cheqqit directory, run this command to create a virtual environment:
 ```
 python -m venv .\venv
 ```
 ## Activate the virtual environment
+Activate the virtual environment using the following command: 
 ```
 venv\scripts\activate
 ```
-## Install the packages 
+Note: Upon running the command **venv\scripts\activate**, if this error shows up:
+```
+venv\scripts\activate : File C:\Users\Training\Documents\New folder\venv\scripts\Activate.ps1 cannot be loaded because running scripts is 
+disabled on this system. For more information, see about_Execution_Policies at http://go.microsoft.com/fwlink/?LinkID=135170.
+```
+Run this command: 
+``` 
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted 
+```
+Then run the command to activate the virtual environment
+## Install all necessary packages 
 
 ```
 pip install -r requirements.txt
 ```
+## Update the database 
+Copy this snippet and replace it with the database configuration settings, or if you are familiar with Postgres, create a new database and connect it to the app.
 
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+```
+## Generate a new secret key
+Make use of [Djecrety](https://djecrety.ir/) to generate your secret key.
+
+## Make migrations
+Run the following commands to make migrations
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+## Create a new superuser
+Run the following command to create a new superuser
+```
+python manage.py createsuperuser
+```
+
+## Run the project
+
+```
+python manage.py runserver
+```
