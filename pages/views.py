@@ -32,6 +32,9 @@ class InboxView(LoginRequiredMixin, ListView):
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['no_of_undone_tasks'] = context['tasks'].filter(completed_task=False).count()
         self.request.session['no_of_undone_tasks'] = context['no_of_undone_tasks']
+        username = self.request.user.username.split()[0].title()
+        context['username'] = username
+
 
         if True in is_task_completed:
             selected_task = ' '.join(i for i in get_task_title)
