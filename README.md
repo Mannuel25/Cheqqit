@@ -1,8 +1,28 @@
-# **CHEQQIT** ✅
+<img src="static/images/img.png" alt="Picture" style="display: block; margin: 0 auto"/>
+<br>
+<p style="text-align:center; font-size:40px;">Cheqqit</p>
+<hr>
+<p style=" text-align:center; font-size:15px;">Cheqqit is a beautiful and easy-to-use online tool that helps you keep track of your tasks.</p>
 
-## Cheqqit is a beautiful and easy-to-use online tool that helps you keep track of your tasks.
+
+# Preview 
+Click on this [link](https://cheqqit.herokuapp.com/) to view Cheqqit.
 
 
-[Live link](https://cheqqit.herokuapp.com/)
+![Image](homepage_screenshot.jpg)
 
-#### Work in progress 🚧 🚧
+
+# Guidelines on how to run locally
+
+## Clone this repository
+
+```
+git clone https://github.com/Mannuel25/Cheqqit.git
+```
+
+## Change directory
+Change your directory to where you cloned the repository
+
+```
+cd Cheqqit
+```
