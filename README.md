@@ -68,7 +68,7 @@ DATABASES = {
 Make use of [Djecrety](https://djecrety.ir/) to generate your secret key.
 
 ## Make migrations
-Run the following commands to make migrations
+Run the following commands separately to make migrations
 ```
 python manage.py makemigrations
 python manage.py migrate
@@ -78,6 +78,15 @@ Run the following command to create a new superuser
 ```
 python manage.py createsuperuser
 ```
+## Update debug settings in the project folder
+
+```
+if os.environ.get('DEBUG')=='TRUE':
+    DEBUG = True
+elif os.environ.get('DEBUG') =='False':
+    DEBUG = False
+```
+Comment out the above snippet and add this below it   **DEBUG = True**
 
 ## Run the project
 
