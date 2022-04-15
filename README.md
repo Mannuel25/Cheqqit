@@ -7,13 +7,13 @@
 <p style="font-size:15px;">Cheqqit is a beautiful and easy-to-use online tool that helps you keep track of your tasks.</p>
 </div>
 
-# Preview 
+# Preview ✨
 
 ![Image](homepage_screenshot.jpg)
 
 Click on this [link](https://cheqqit.herokuapp.com/) to view Cheqqit.
 
-# Guidelines on how to run locally
+# Guidelines on how to run locally 💻
 
 ## Clone this repository
 
@@ -93,3 +93,8 @@ Comment out the above snippet and add this below it   **DEBUG = True**
 ```
 python manage.py runserver
 ```
+# Contribution 🌟
+Are you interested in making any contribution to the project?. Be sure to follow the [contribution guidelines](CONTRIBUTING.md). If you love this project, kindly guve it a star ⭐ and share it with others 🤗.
+
+# License 🔐
+Thsi project is under an [MIT LICENSE](LICENSE)
