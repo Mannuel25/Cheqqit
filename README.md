@@ -94,7 +94,7 @@ Comment out the above snippet and add this below it   **DEBUG = True**
 python manage.py runserver
 ```
 # Contribution 🌟
-Are you interested in making any contribution to the project?. Be sure to follow the [contribution guidelines](CONTRIBUTING.md). If you love this project, kindly guve it a star ⭐ and share it with others 🤗.
+Are you interested in making any contribution to the project?. Be sure to follow the [contribution guidelines](CONTRIBUTING.md) while making your contributions. If you love this project, kindly give it a star ⭐ and share it with others 🤗.
 
 # License 🔐
 Thsi project is under an [MIT LICENSE](LICENSE)
