@@ -67,5 +67,3 @@ class TaskDetailsForm(forms.ModelForm):
         model = UserTasks
         fields = ('title', 'description','task_due_date','task_due_time',)
 
-class TaskPositionForm(forms.Form):
-    task_position = forms.CharField()

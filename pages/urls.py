@@ -10,7 +10,6 @@ urlpatterns = [
     path('task_detail/<slug:slug>/', TaskDetail, name='task_detail'),
     path('delete_task/<slug:slug>/', DeleteTask, name='delete_task'),
     path('today/', TodayView.as_view(), name='today'),
-    path('task-reorder/', TaskReorder.as_view(), name='task-reorder'),
 ]
 
 handler404 = 'pages.views.page_not_found'

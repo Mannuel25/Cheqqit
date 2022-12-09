@@ -175,12 +175,3 @@ def page_not_found(request, exception):
 
 def server_error(request, exception=None):
     return render(request, '500.html')
-
-class TaskReorder(View):
-    def postion(self, request):
-        form = TaskPositionForm(request.POST)
-        if form.is_valid():
-            positionList = form.cleaned_data["position"].split(',')
-            with transaction.atomic():
-                self.request.user.set_task_order(positionList)
-        return redirect(reverse_lazy('inbox'))

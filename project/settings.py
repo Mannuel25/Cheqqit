@@ -36,7 +36,7 @@ if os.environ.get('DEBUG')=='TRUE':
 elif os.environ.get('DEBUG') =='False':
     DEBUG = False
 
-ALLOWED_HOSTS = ['cheqqit.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['cheqqit.up.railway.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
